@@ -2,118 +2,118 @@
   "runs": [
     {
       "kind": "forgedMint",
-      "at": "2026-11-18T03:35:05.958Z",
-      "t0Block": 60255144,
-      "t0BlockTime": 1794972897,
+      "at": "2026-11-18T03:37:20.000Z",
+      "t0Block": 60255811,
+      "t0BlockTime": 1794973031,
       "timeline": [
         {
-          "ms": 829,
+          "ms": 596,
           "label": "Forged mint of 100 rsETH.b lands on Base",
           "chain": "base",
-          "hash": "0x404d409c69b5789ebc88dcb980542df24e76e483405c2e7d46c695f1b4c84257",
+          "hash": "0xe714658167da14933e2851780736b34435f922cbee8a12cf3f5fd507e0acb746",
           "ok": true,
           "kind": "attack",
-          "url": "https://sepolia.basescan.org/tx/0x404d409c69b5789ebc88dcb980542df24e76e483405c2e7d46c695f1b4c84257"
+          "url": "https://sepolia.basescan.org/tx/0xe714658167da14933e2851780736b34435f922cbee8a12cf3f5fd507e0acb746"
         },
         {
-          "ms": 1706,
+          "ms": 1493,
           "label": "Attacker posts 50 as collateral",
           "chain": "base",
-          "hash": "0xefe139d9da6e234611dde45035c531966cfb2ba9d3bff3ff9166bbf8ae7fba65",
+          "hash": "0xd77471cb7b4b776bdde638ca1f6fa758bc3a81ed213d16b656671cb573834135",
           "ok": true,
           "kind": "attack",
-          "url": "https://sepolia.basescan.org/tx/0xefe139d9da6e234611dde45035c531966cfb2ba9d3bff3ff9166bbf8ae7fba65"
+          "url": "https://sepolia.basescan.org/tx/0xd77471cb7b4b776bdde638ca1f6fa758bc3a81ed213d16b656671cb573834135"
         },
         {
-          "ms": 1706,
+          "ms": 1493,
           "label": "Attacker burns 50 to exit through the bridge",
           "chain": "base",
-          "hash": "0xcc7c0be8b8043d4659983c8894dac133525368b396552315b345d2d4c3e8170a",
+          "hash": "0x7139c733a87c8253e562865951c3f590c147a5f9c37ff1e6843ea821255c1302",
           "ok": true,
           "kind": "attack",
-          "url": "https://sepolia.basescan.org/tx/0xcc7c0be8b8043d4659983c8894dac133525368b396552315b345d2d4c3e8170a"
+          "url": "https://sepolia.basescan.org/tx/0x7139c733a87c8253e562865951c3f590c147a5f9c37ff1e6843ea821255c1302"
         },
         {
-          "ms": 2694,
+          "ms": 2234,
           "label": "Firebreak sees the books break and calls both chains",
           "chain": "lasna",
-          "hash": "0x6a4d9953581e8d6c6cf9d607a59d31831d55b868b06d46f4fba696e4f2f03533",
+          "hash": "0xdff7ca4114ea7672b991c25fcad07cd3bc67c0a23d5997bf6a6b82fe13d3d2f8",
           "ok": true,
           "kind": "firebreak",
-          "url": "https://lasna.reactscan.net/tx/0x6a4d9953581e8d6c6cf9d607a59d31831d55b868b06d46f4fba696e4f2f03533"
+          "url": "https://lasna.reactscan.net/tx/0xdff7ca4114ea7672b991c25fcad07cd3bc67c0a23d5997bf6a6b82fe13d3d2f8"
         },
         {
-          "ms": 2781,
-          "label": "Attacker tries to borrow 105,000 tUSD",
-          "chain": "base",
-          "hash": "0xfdee4d0de8382b91311c554a59e53a404e6fe6f0f0401c5a29fbc0c0ce3c54ba",
-          "ok": false,
-          "kind": "blocked",
-          "url": "https://sepolia.basescan.org/tx/0xfdee4d0de8382b91311c554a59e53a404e6fe6f0f0401c5a29fbc0c0ce3c54ba"
-        },
-        {
-          "ms": 3558,
+          "ms": 2351,
           "label": "Base: bridge minter and lending pool halted",
           "chain": "base",
-          "hash": "0x8a5a7de51bde10e08a4fe8c2d14cac9a788119f9ccbefe0bea667939ac6058c5",
+          "hash": "0x149586bec3aeda3fb0b4831b54bd395e820efc3ed7a267687ada9bb8d6fb4674",
           "ok": true,
           "kind": "firebreak",
-          "url": "https://sepolia.basescan.org/tx/0x8a5a7de51bde10e08a4fe8c2d14cac9a788119f9ccbefe0bea667939ac6058c5"
+          "url": "https://sepolia.basescan.org/tx/0x149586bec3aeda3fb0b4831b54bd395e820efc3ed7a267687ada9bb8d6fb4674"
         },
         {
-          "ms": 4699,
+          "ms": 2352,
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "chain": "base",
+          "hash": "0xcc47bff33937aac721767081a7fcf40f11c6b394809e91ed14fc2a6499e482ed",
+          "ok": false,
+          "kind": "blocked",
+          "url": "https://sepolia.basescan.org/tx/0xcc47bff33937aac721767081a7fcf40f11c6b394809e91ed14fc2a6499e482ed"
+        },
+        {
+          "ms": 3858,
           "label": "Unichain: bridge vault halted",
           "chain": "uni",
-          "hash": "0x1b7d44603e5942b3eae707306bb4c496ac3e56c3900c6769add72babf095dd15",
+          "hash": "0x5d2154846676a874a18adf4abb20b0e4c58b30b87e2bfa87cac6d3bf22984d34",
           "ok": true,
           "kind": "firebreak",
-          "url": "https://sepolia.uniscan.xyz/tx/0x1b7d44603e5942b3eae707306bb4c496ac3e56c3900c6769add72babf095dd15"
+          "url": "https://sepolia.uniscan.xyz/tx/0x5d2154846676a874a18adf4abb20b0e4c58b30b87e2bfa87cac6d3bf22984d34"
         },
         {
-          "ms": 8980,
+          "ms": 9528,
           "label": "Bridge releases 50 real rsETH on Unichain",
           "chain": "uni",
-          "hash": "0x5eb0bd3158c57740317d465f38b863f223b4a1013f5f4ea5d4f4fc08dd725f37",
+          "hash": "0xfc1ec067ada2700403650fcfa51d5daca0c38e89eeb40c9414fb1ffddeaa2b16",
           "ok": false,
-          "kind": "failed",
-          "url": "https://sepolia.uniscan.xyz/tx/0x5eb0bd3158c57740317d465f38b863f223b4a1013f5f4ea5d4f4fc08dd725f37"
+          "kind": "blocked",
+          "url": "https://sepolia.uniscan.xyz/tx/0xfc1ec067ada2700403650fcfa51d5daca0c38e89eeb40c9414fb1ffddeaa2b16"
         }
       ],
       "seen": {
         "breach": {
-          "ms": 2694,
-          "hash": "0x6a4d9953581e8d6c6cf9d607a59d31831d55b868b06d46f4fba696e4f2f03533",
-          "block": 8621652,
-          "blockTime": 1794972897,
+          "ms": 2234,
+          "hash": "0xdff7ca4114ea7672b991c25fcad07cd3bc67c0a23d5997bf6a6b82fe13d3d2f8",
+          "block": 8621778,
+          "blockTime": 1794973030,
           "args": {
             "reason": 1,
             "originChainId": "84532",
-            "originTx": "29084515461967302656240393780680851185204451466619409624120636483345045799511",
+            "originTx": "104520305529181128413458944913676167157259265142951239737305746686330245265222",
             "amount": "100000000000000000000"
           }
         },
         "haltBase": {
-          "ms": 3558,
-          "hash": "0x8a5a7de51bde10e08a4fe8c2d14cac9a788119f9ccbefe0bea667939ac6058c5",
-          "block": 60255152,
-          "blockTime": 1794972899,
+          "ms": 2594,
+          "hash": "0x149586bec3aeda3fb0b4831b54bd395e820efc3ed7a267687ada9bb8d6fb4674",
+          "block": 60255818,
+          "blockTime": 1794973032,
           "args": {
             "reason": 1,
             "originChainId": "84532",
-            "originTx": "29084515461967302656240393780680851185204451466619409624120636483345045799511",
+            "originTx": "104520305529181128413458944913676167157259265142951239737305746686330245265222",
             "detail": "100000000000000000000",
             "halted": "2"
           }
         },
         "haltUni": {
-          "ms": 4699,
-          "hash": "0x1b7d44603e5942b3eae707306bb4c496ac3e56c3900c6769add72babf095dd15",
-          "block": 68120472,
-          "blockTime": 1794972900,
+          "ms": 3858,
+          "hash": "0x5d2154846676a874a18adf4abb20b0e4c58b30b87e2bfa87cac6d3bf22984d34",
+          "block": 68120605,
+          "blockTime": 1794973033,
           "args": {
             "reason": 1,
             "originChainId": "84532",
-            "originTx": "29084515461967302656240393780680851185204451466619409624120636483345045799511",
+            "originTx": "104520305529181128413458944913676167157259265142951239737305746686330245265222",
             "detail": "100000000000000000000",
             "halted": "1"
           }
@@ -122,101 +122,101 @@
     },
     {
       "kind": "forgedRelease",
-      "at": "2026-11-18T03:35:24.794Z",
-      "t0BlockTime": 1794972918,
+      "at": "2026-11-18T03:37:36.195Z",
+      "t0BlockTime": 1794973049,
       "drained": "5",
       "attempted": "40",
       "timeline": [
         {
-          "ms": 2291,
+          "ms": 1421,
           "label": "Forged release #1: 5 rsETH",
           "chain": "uni",
-          "hash": "0x40382b0580858e5ce79d2955d0f434eec8f7f77cc6a4b22a4874cae60c64fbd8",
+          "hash": "0xc0f49887a83937c88faa9571f6be1e6af8a871fb198dc659486a2c27bd8258a2",
           "ok": true,
           "kind": "loss",
-          "url": "https://sepolia.uniscan.xyz/tx/0x40382b0580858e5ce79d2955d0f434eec8f7f77cc6a4b22a4874cae60c64fbd8"
+          "url": "https://sepolia.uniscan.xyz/tx/0xc0f49887a83937c88faa9571f6be1e6af8a871fb198dc659486a2c27bd8258a2"
         },
         {
-          "ms": 3103,
+          "ms": 2081,
           "label": "Firebreak sees the books break and calls both chains",
           "chain": "lasna",
-          "hash": "0xe27da1663b2abb6a593b50e529a5d9dc47fa0b0bade7489b5afa0f2d384faf4b",
+          "hash": "0x948af0606f39903b11ed90b15fcd88104992cc7152a24324ba19dc32f2733a8e",
           "ok": true,
           "kind": "firebreak",
-          "url": "https://lasna.reactscan.net/tx/0xe27da1663b2abb6a593b50e529a5d9dc47fa0b0bade7489b5afa0f2d384faf4b"
+          "url": "https://lasna.reactscan.net/tx/0x948af0606f39903b11ed90b15fcd88104992cc7152a24324ba19dc32f2733a8e"
         },
         {
-          "ms": 3575,
+          "ms": 2436,
           "label": "Base: bridge minter and lending pool halted",
           "chain": "base",
-          "hash": "0x3b55dbfc55027750c79670f305ec1aa5a6fc5752cff9b1bd2f44ee664d3f449b",
+          "hash": "0x151372f3ae99cd4f552a3bc1aaa323ff016f45e0c9394fce928ae76bc9209b7b",
           "ok": true,
           "kind": "firebreak",
-          "url": "https://sepolia.basescan.org/tx/0x3b55dbfc55027750c79670f305ec1aa5a6fc5752cff9b1bd2f44ee664d3f449b"
+          "url": "https://sepolia.basescan.org/tx/0x151372f3ae99cd4f552a3bc1aaa323ff016f45e0c9394fce928ae76bc9209b7b"
         },
         {
-          "ms": 4013,
-          "label": "Forged release #2: 5 rsETH",
-          "chain": "uni",
-          "hash": "0x390151ad4eea9c1e914ba51fa4473089048715a7615a57c4085bc37f80acacd7",
-          "ok": false,
-          "kind": "failed",
-          "url": "https://sepolia.uniscan.xyz/tx/0x390151ad4eea9c1e914ba51fa4473089048715a7615a57c4085bc37f80acacd7"
-        },
-        {
-          "ms": 4592,
+          "ms": 3659,
           "label": "Unichain: bridge vault halted",
           "chain": "uni",
-          "hash": "0x0ddbef40acc879cbd9fb80a27786a856f426fdb9959cb64f113636f00828569b",
+          "hash": "0x197277725f032e74a5b5fd1025d06a8ceb636cab6e070db3652b8bd9371f1a40",
           "ok": true,
           "kind": "firebreak",
-          "url": "https://sepolia.uniscan.xyz/tx/0x0ddbef40acc879cbd9fb80a27786a856f426fdb9959cb64f113636f00828569b"
+          "url": "https://sepolia.uniscan.xyz/tx/0x197277725f032e74a5b5fd1025d06a8ceb636cab6e070db3652b8bd9371f1a40"
         },
         {
-          "ms": 7912,
+          "ms": 4696,
+          "label": "Forged release #2: 5 rsETH",
+          "chain": "uni",
+          "hash": "0xd9d67d33d9cec5ffc10e656ca82a94f1c0f55cd3e8af63209832b7fe3b24f963",
+          "ok": false,
+          "kind": "blocked",
+          "url": "https://sepolia.uniscan.xyz/tx/0xd9d67d33d9cec5ffc10e656ca82a94f1c0f55cd3e8af63209832b7fe3b24f963"
+        },
+        {
+          "ms": 7782,
           "label": "Forged release #3: 5 rsETH",
           "chain": "uni",
-          "hash": "0xf2d2d94be584c6201360ac39de0eee256a6329b3f99aa3c27c37c3af62dba0a8",
+          "hash": "0x976d26099ff3dc9b1345b08b34a43f98c2ddf0b9248a05586c8b70bd6f493656",
           "ok": false,
-          "kind": "failed",
-          "url": "https://sepolia.uniscan.xyz/tx/0xf2d2d94be584c6201360ac39de0eee256a6329b3f99aa3c27c37c3af62dba0a8"
+          "kind": "blocked",
+          "url": "https://sepolia.uniscan.xyz/tx/0x976d26099ff3dc9b1345b08b34a43f98c2ddf0b9248a05586c8b70bd6f493656"
         }
       ],
       "seen": {
         "breach": {
-          "ms": 3103,
-          "hash": "0xe27da1663b2abb6a593b50e529a5d9dc47fa0b0bade7489b5afa0f2d384faf4b",
-          "block": 8621671,
-          "blockTime": 1794972917,
+          "ms": 2081,
+          "hash": "0x948af0606f39903b11ed90b15fcd88104992cc7152a24324ba19dc32f2733a8e",
+          "block": 8621795,
+          "blockTime": 1794973048,
           "args": {
             "reason": 2,
             "originChainId": "1301",
-            "originTx": "29047262668384198836826520607356463674187905045476679084841190035240845114328",
+            "originTx": "87276230334546587655923530059487195066490660861465644844104197848484959901858",
             "amount": "5000000000000000000"
           }
         },
         "haltBase": {
-          "ms": 3575,
-          "hash": "0x3b55dbfc55027750c79670f305ec1aa5a6fc5752cff9b1bd2f44ee664d3f449b",
-          "block": 60255255,
-          "blockTime": 1794972919,
+          "ms": 2436,
+          "hash": "0x151372f3ae99cd4f552a3bc1aaa323ff016f45e0c9394fce928ae76bc9209b7b",
+          "block": 60255907,
+          "blockTime": 1794973050,
           "args": {
             "reason": 2,
             "originChainId": "1301",
-            "originTx": "29047262668384198836826520607356463674187905045476679084841190035240845114328",
+            "originTx": "87276230334546587655923530059487195066490660861465644844104197848484959901858",
             "detail": "5000000000000000000",
             "halted": "2"
           }
         },
         "haltUni": {
-          "ms": 4592,
-          "hash": "0x0ddbef40acc879cbd9fb80a27786a856f426fdb9959cb64f113636f00828569b",
-          "block": 68120492,
-          "blockTime": 1794972920,
+          "ms": 3659,
+          "hash": "0x197277725f032e74a5b5fd1025d06a8ceb636cab6e070db3652b8bd9371f1a40",
+          "block": 68120623,
+          "blockTime": 1794973051,
           "args": {
             "reason": 2,
             "originChainId": "1301",
-            "originTx": "29047262668384198836826520607356463674187905045476679084841190035240845114328",
+            "originTx": "87276230334546587655923530059487195066490660861465644844104197848484959901858",
             "detail": "5000000000000000000",
             "halted": "1"
           }
