@@ -137,13 +137,21 @@ async function startAttack(kind) {
 }
 
 // ---------------------------------------------------------------- http
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.woff2': 'font/woff2' }
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.jpg': 'image/jpeg' }
 function serveStatic(res, pathname) {
   const rel = pathname === '/' ? 'index.html' : decodeURIComponent(pathname).replace(/^\/+/, '')
   for (const dir of STATIC) {
     const f = path.join(dir, rel)
     if (f.startsWith(dir) && fs.existsSync(f) && fs.statSync(f).isFile()) {
-      res.writeHead(200, { 'content-type': TYPES[path.extname(f)] ?? 'application/octet-stream', 'cache-control': 'public, max-age=300' })
+      const size = fs.statSync(f).size
+      const m = /bytes=(\d*)-(\d*)/.exec(res.req?.headers.range ?? '')
+      if (m && path.extname(f) === '.mp4') {
+        const start = m[1] ? Number(m[1]) : size - Number(m[2])
+        const end = m[1] && m[2] ? Math.min(Number(m[2]), size - 1) : size - 1
+        res.writeHead(206, { 'content-type': 'video/mp4', 'accept-ranges': 'bytes', 'content-range': `bytes ${start}-${end}/${size}`, 'content-length': end - start + 1 })
+        return fs.createReadStream(f, { start, end }).pipe(res)
+      }
+      res.writeHead(200, { 'content-length': size, 'accept-ranges': 'bytes', 'content-type': TYPES[path.extname(f)] ?? 'application/octet-stream', 'cache-control': 'public, max-age=300' })
       return fs.createReadStream(f).pipe(res)
     }
   }
