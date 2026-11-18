@@ -1,6 +1,6 @@
 # Firebreak live demo
 
-Run 2026-11-18T03:29:16.847Z · commit `8521810df056e4cceca9e7159892ac058b11061c`
+Run 2026-11-18T03:31:33.714Z · commit `8521810df056e4cceca9e7159892ac058b11061c`
 
 | Contract | Chain | Address |
 |---|---|---|
@@ -19,9 +19,14 @@ Times are measured from the moment the attacker's first transaction was sent.
 
 | ms | Chain | What happened | Result | Transaction |
 |---:|---|---|---|---|
-| 527 | Base | Forged mint of 500 rsETH.b lands on Base | Attacker step | [0x96cf665d8a…](https://sepolia.basescan.org/tx/0x96cf665d8a1d199e0add9521a95b2a98b5e91124dd7b806f826a014414d0f772) |
-| 1418 | Base | Attacker posts 250 as collateral | Blocked (reverted) | [0xa78246be29…](https://sepolia.basescan.org/tx/0xa78246be29d42672b046b12554698f065aff303d1ad554c84cf5a65fde3b634f) |
-| 1418 | Base | Attacker burns 250 to exit through the bridge | Blocked (reverted) | [0xf0cdef8807…](https://sepolia.basescan.org/tx/0xf0cdef880736013081d42bfbc0ff11102261c34dfc1ec1e5e660d8c9af8be17e) |
+| 750 | Base | Forged mint of 500 rsETH.b lands on Base | Attacker step | [0x7b6a0e4a80…](https://sepolia.basescan.org/tx/0x7b6a0e4a801d1c64fba6b52d0083a9eea10e354a676359cd530417929cce81ad) |
+| 1733 | Base | Attacker posts 250 as collateral | Attacker step | [0xe28b8f7255…](https://sepolia.basescan.org/tx/0xe28b8f725578c840cec46a2c38873c06b25caddfdfa11e959906dd11ced18947) |
+| 1733 | Base | Attacker burns 250 to exit through the bridge | Attacker step | [0xb218a83fd3…](https://sepolia.basescan.org/tx/0xb218a83fd359dd166b6bc846fdedb12419cd871f9b4e016ab543efa1e262221d) |
+| 2217 | Lasna | Firebreak sees the books break and calls both chains | **Firebreak** | [0xbfcc5e282a…](https://lasna.reactscan.net/tx/0xbfcc5e282ae5a0d1543fc8277e7c59c04e6b4d6859c9974b41c6256cbe417354) |
+| 2643 | Base | Base: bridge minter and lending pool halted | **Firebreak** | [0x70c39cd289…](https://sepolia.basescan.org/tx/0x70c39cd289f5b874660ecbd44f53c4928cab3c92f6e4661b1e508f7f9dce3eae) |
+| 2744 | Base | Attacker tries to borrow 525,000 tUSD | Blocked (reverted) | [0x79688f6205…](https://sepolia.basescan.org/tx/0x79688f62057eb53fd643f720fb66785b451f2d323a7d9310f0117f70ac17c514) |
+| 3581 | Unichain | Bridge releases 250 real rsETH on Unichain | Reverted (other reason) | [0x6e68f4a637…](https://sepolia.uniscan.xyz/tx/0x6e68f4a637be12c5ea1fb0209c7b2f861c7b61986dd3b8da25232e28b98ec9d2) |
+| 4105 | Unichain | Unichain: bridge vault halted | **Firebreak** | [0x44ada3136c…](https://sepolia.uniscan.xyz/tx/0x44ada3136c4e58b37837400ce9a907274679c2a256de875c7d0d3d81574c4544) |
 
 ## Attack 2 · forged vault releases on Unichain (Nomad-style)
 
@@ -29,12 +34,12 @@ Times are measured from the moment the attacker's first transaction was sent.
 
 | ms | Chain | What happened | Result | Transaction |
 |---:|---|---|---|---|
-| 1991 | Unichain | Forged release #1: 5 rsETH | Went through | [0x22109c6b31…](https://sepolia.uniscan.xyz/tx/0x22109c6b318eaa6a1e3992d32499cb9e17002bc364413577293d55583d4fa32a) |
-| 2154 | Lasna | Firebreak sees the books break and calls both chains | **Firebreak** | [0x30d7b63e79…](https://lasna.reactscan.net/tx/0x30d7b63e79b920263996de20602841a4f3c65cf5db3c7680788da3e0f3cb7d6f) |
-| 2312 | Unichain | Forged release #2: 5 rsETH | Blocked (reverted) | [0xc3ce11b02f…](https://sepolia.uniscan.xyz/tx/0xc3ce11b02f43c5fd1ff99d95cd9f830a095b4339231f39950a33f39394df4b3e) |
-| 2899 | Unichain | Forged release #3: 5 rsETH | Blocked (reverted) | [0xc235d8486c…](https://sepolia.uniscan.xyz/tx/0xc235d8486cf28ece99e8476bf94cf10cbf97db6f610dd7929652e8e5874893f6) |
-| 3157 | Base | Base: bridge minter and lending pool halted | **Firebreak** | [0x7a2a2160c1…](https://sepolia.basescan.org/tx/0x7a2a2160c1510302b114e43fefd029af02efb62a0aa9a9d875ee55427c3667ce) |
-| 3793 | Unichain | Unichain: bridge vault halted | **Firebreak** | [0xcd0ebbb601…](https://sepolia.uniscan.xyz/tx/0xcd0ebbb60116361f4d30a22e68eb262b74a0e54104605ace512636501ced94c5) |
+| 2261 | Unichain | Forged release #1: 5 rsETH | Went through | [0x4bd3f3298a…](https://sepolia.uniscan.xyz/tx/0x4bd3f3298a3a78fb7e7a495ce0462b8e81d30d3abb449e864c1c4caa56c36cce) |
+| 2827 | Unichain | Forged release #2: 5 rsETH | Reverted (other reason) | [0x0104d68fb2…](https://sepolia.uniscan.xyz/tx/0x0104d68fb2a92c8bcfb4ea0d6dc6e45a75e91e871484d6f1a01be401c0c12dc5) |
+| 3080 | Lasna | Firebreak sees the books break and calls both chains | **Firebreak** | [0x1ccfd6b974…](https://lasna.reactscan.net/tx/0x1ccfd6b974b02bcaee82ae7bb02c2aa2a86890efce185953fc5e378c586ef282) |
+| 3391 | Unichain | Forged release #3: 5 rsETH | Reverted (other reason) | [0x8e8ab44f01…](https://sepolia.uniscan.xyz/tx/0x8e8ab44f01439d27673ea1907fc33f69e5124d5c00550459dab93829b106b4ea) |
+| 3510 | Base | Base: bridge minter and lending pool halted | **Firebreak** | [0x675d87e21d…](https://sepolia.basescan.org/tx/0x675d87e21d22d365c4aafef3e73349ea588179cff6984b72886f2cec05a3adac) |
+| 4206 | Unichain | Unichain: bridge vault halted | **Firebreak** | [0xee948e8000…](https://sepolia.uniscan.xyz/tx/0xee948e80006fce62036a19afe8175b17d41d715b5e7378003a31e04792b1f7ec) |
 
 Drained before the halt: **5 rsETH** of 40 attempted.
 
