@@ -144,11 +144,10 @@ function follow() {
       const tl = ev.run.timeline
       drawProcess(tl)
       $('#timeline').innerHTML = tl.map(row).join('')
-      const fb = tl.filter((s) => s.kind === 'firebreak')
-      const halt = fb.length ? Math.max(...fb.map((s) => s.ms)) : null
+      const halt = haltAfter(ev.run)
       const lost = tl.filter((s) => s.kind === 'loss').length
       const blocked = tl.filter((s) => s.kind === 'blocked').length
-      status(`Both chains halted ${halt ? `${(halt / 1000).toFixed(1)} s` : ''} after the attacker's first transaction. ${blocked} attacker step${blocked === 1 ? '' : 's'} blocked${lost ? `, ${lost} got through first` : ''}.`)
+      status(`${halt ? `First chain halted ${(halt / 1000).toFixed(1)} s after the forged event landed.` : 'Run finished.'} ${blocked} attacker step${blocked === 1 ? '' : 's'} blocked${lost ? `, ${lost} got through first` : ''}.`)
       loadRuns(false)
     }
     if (ev.type === 'error') (clearInterval(tick), status(ev.message, true))
@@ -174,10 +173,16 @@ document.querySelectorAll('.attack').forEach((b) => {
 })
 
 // ---------------------------------------------------------------- recorded runs
+/** Seconds from the first forged event landing to the first chain halted. */
+function haltAfter(r) {
+  const first = r.timeline.find((s) => s.chain !== 'lasna' && s.kind !== 'firebreak')
+  const halt = r.timeline.find((s) => s.kind === 'firebreak' && s.chain !== 'lasna')
+  return first && halt ? halt.ms - first.ms : 0
+}
 async function loadRuns(showLatest = true) {
   const { runs } = await (await fetch('/api/runs')).json()
   if (!runs.length) return ($('#runs').innerHTML = '<p class="muted">No runs recorded yet.</p>')
-  const halts = runs.map((r) => Math.max(0, ...r.timeline.filter((s) => s.kind === 'firebreak').map((s) => s.ms))).filter((x) => x > 0).sort((a, b) => a - b)
+  const halts = runs.map(haltAfter).filter((x) => x > 0).sort((a, b) => a - b)
   if (halts.length) $('#statLatency').textContent = `~${(halts[Math.floor(halts.length / 2)] / 1000).toFixed(1)} s`
   if (showLatest && !streaming && runs[0]) {
     drawProcess(runs[0].timeline)

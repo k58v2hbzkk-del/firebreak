@@ -41,7 +41,10 @@ async function settle(ch, hash) {
   const r = await pub(ch).waitForTransactionReceipt({ hash, timeout: 120_000 })
   let haltedThen = null
   if (r.status !== 'success' && r.to) {
-    haltedThen = await pub(ch).readContract({ address: r.to, abi: ABI.guarded, functionName: 'halted', blockNumber: r.blockNumber }).catch(() => null)
+    for (let i = 0; i < 8 && haltedThen == null; i++) {
+      haltedThen = await pub(ch).readContract({ address: r.to, abi: ABI.guarded, functionName: 'halted', blockNumber: r.blockNumber }).catch(() => null)
+      if (haltedThen == null) await sleep(500)
+    }
   }
   return { ok: r.status === 'success', block: r.blockNumber, hash, haltedThen }
 }
@@ -168,6 +171,13 @@ function finish(kind, d, steps, seen, extra) {
     seen.haltBase && { ms: seen.haltBase.ms, label: 'Base: bridge minter and lending pool halted', chain: 'base', hash: seen.haltBase.hash, ok: true, kind: 'firebreak' },
     seen.haltUni && { ms: seen.haltUni.ms, label: 'Unichain: bridge vault halted', chain: 'uni', hash: seen.haltUni.hash, ok: true, kind: 'firebreak' },
   ].filter(Boolean)
+  // polling sees a halt late; a step that reverted because its target was halted proves the
+  // halt had landed by then, so use whichever came first
+  for (const l of lines) {
+    if (l.chain === 'lasna') continue
+    const proof = steps.filter((s) => s.chain === l.chain && s.kind === 'blocked').map((s) => s.ms)
+    if (proof.length && Math.min(...proof) < l.ms) l.ms = Math.min(...proof) - 1
+  }
   const timeline = [...steps, ...lines].sort((a, b) => a.ms - b.ms)
   console.log(`-- ${kind} summary`)
   for (const t of timeline) console.log(`${String(t.ms).padStart(6)} ms  [${t.kind}] ${t.label}`)
