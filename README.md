@@ -47,7 +47,7 @@ In April 2026 a forged cross-chain message let an attacker mint about 116,500 rs
 
 ### Why it needs Reactive Omni
 
-The lending pool makes new bridged collateral settle for 2 blocks (about 4 s on Base) before it can back a loan. That window is only safe because Omni's ~1 s blocks and instant finality let Firebreak decide inside it. Remove Reactive and nothing can see both chains at once. Slow it down to 7 s blocks and every honest borrower would have to wait several times longer.
+Only something that sees both chains at once can tell a forged mint from a real one, and only something that acts on its own can act inside the window before the attacker cashes out. Reactive Omni does both: Firebreak's reactive contract reads both halves of the bridge and calls back to every chain within about a second of the forged mint, with no bot or keeper in between. Remove Reactive and nothing can see both chains at once. Make the loop slower and the attacker gets more time to borrow and bridge out.
 
 ## Live demo: play the attacker
 
@@ -102,7 +102,8 @@ The server reads all three chains, runs at most one attack at a time with a cool
 
 - Firebreak cannot stop the first forged transaction: nothing on that chain can tell it is forged. It stops what comes next: the borrowing, the bridging out and the copycats.
 - In the Nomad-style run, releases that land before the halt get through. The recorded runs show how many.
-- The demo bridge relayer waits 5 seconds before acting on an event (real bridges wait minutes, for finality). Firebreak needs about 2 seconds, so it books the honest half first and halts the vault before a forged burn can be released.
+- The demo bridge relayer waits 5 seconds before acting on an event (real bridges wait minutes, for finality). Firebreak needs about 1.4 seconds (median) to halt Base and about 2.8 seconds to halt Unichain, so the vault is halted before a forged burn can be released.
+- The demo lending pool only asks new collateral to wait 2 blocks before it can back a loan. Base Sepolia's blocks are now much shorter than when the pool was written, so that wait is often shorter than Firebreak's response, and an attacker's borrow can land before the halt. The bridge exit was still blocked in every run. A real market listing a bridged asset would hold new collateral for a few seconds.
 - Testnet only, not audited.
 
 ## Credits
