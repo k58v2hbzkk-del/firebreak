@@ -76,7 +76,7 @@ export async function bench(n = 5) {
 const s = (ms) => (ms == null ? '–' : `${(ms / 1000).toFixed(2)} s`)
 const link = (ch, h) => (h ? `[${h.slice(0, 10)}…](${tx(ch, h)})` : '–')
 
-function md(o) {
+export function md(o) {
   const st = o.stats
   let m = `# Firebreak response times\n\nThe forged-mint attack, repeated ${o.runs.length} times on testnet (${o.at}).\n`
   m += `Each time is measured from the moment the forged mint was confirmed on Base.\n\n`
@@ -85,10 +85,10 @@ function md(o) {
     m += `| Firebreak sees the breach (Lasna) | ${s(st.breachMs?.min)} | ${s(st.breachMs?.median)} | ${s(st.breachMs?.max)} | ${s(st.breachMs?.avg)} |\n`
     m += `| Base halted | ${s(st.baseMs.min)} | ${s(st.baseMs.median)} | ${s(st.baseMs.max)} | ${s(st.baseMs.avg)} |\n`
     m += `| Unichain halted | ${s(st.uniMs?.min)} | ${s(st.uniMs?.median)} | ${s(st.uniMs?.max)} | ${s(st.uniMs?.avg)} |\n`
-    if (st.baseBlocks) m += `\nOn Base, the halt landed a median of **${st.baseBlocks.median} block(s)** after the forged mint (Base Sepolia makes a block every 2 s).\n`
+    if (st.baseBlockSecs) m += `\nChecked against the chain itself: by block timestamps, Base was halted a median of **${st.baseBlockSecs.median} s** (${st.baseBlocks.median} blocks) after the forged mint's block, and Unichain **${st.uniBlockSecs.median} s** after it. Block timestamps are whole seconds.\n`
   }
-  m += `\n## Every run\n\n| Run | Forged mint | Breach seen | Base halted | Unichain halted | Blocks on Base | Attacker steps blocked | Halt on Base |\n|---:|---|---:|---:|---:|---:|---:|---|\n`
-  for (const r of o.runs) m += `| ${r.run} | ${link(base, r.mintHash)} | ${s(r.breachMs)} | ${s(r.baseMs)} | ${s(r.uniMs)} | ${r.baseBlocks ?? '–'} | ${r.blocked.length} | ${link(base, r.baseHash)} |\n`
+  m += `\n## Every run\n\n| Run | Forged mint | Breach seen | Base halted | Unichain halted | Blocks on Base | Borrow | Bridge exit | Halt on Base |\n|---:|---|---:|---:|---:|---:|---|---|---|\n`
+  for (const r of o.runs) m += `| ${r.run} | ${link(base, r.mintHash)} | ${s(r.breachMs)} | ${s(r.baseMs)} | ${s(r.uniMs)} | ${r.baseBlocks ?? '–'} | ${{ blocked: 'Blocked by Firebreak', failed: 'Reverted (not by Firebreak)', loss: 'Went through', 'not tried': '–' }[r.borrow] ?? '–'} | ${r.steps?.some((x) => x.label.startsWith('Bridge releases') && x.kind === 'blocked') ? 'Blocked by Firebreak' : '–'} | ${link(base, r.baseHash)} |\n`
   m += `\nWall-clock times come from a script polling public RPCs, so they include a little polling delay. Block counts come straight from the chain.\n`
   return m
 }

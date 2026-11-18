@@ -22,6 +22,8 @@ try {
 const demoFile = path.join(ROOT, '..', 'deployments', 'demo.json')
 const recorded = fs.existsSync(demoFile) ? JSON.parse(fs.readFileSync(demoFile, 'utf8')).runs : []
 const runs = [...recorded].reverse() // newest first
+const benchFile = path.join(ROOT, '..', 'deployments', 'bench.json')
+const bench = fs.existsSync(benchFile) ? JSON.parse(fs.readFileSync(benchFile, 'utf8')) : null
 
 const A = {
   rx: artifact('FirebreakReactive', 'FirebreakReactive.sol').abi,
@@ -160,6 +162,7 @@ http
       if (url.pathname === '/health') return void res.end('ok')
       if (url.pathname === '/api/state') return json(res, 200, await state())
       if (url.pathname === '/api/runs') return json(res, 200, { runs })
+      if (url.pathname === '/api/bench') return json(res, 200, { bench })
       if (url.pathname === '/api/attack' && req.method === 'POST') {
         let raw = ''
         for await (const c of req) if ((raw += c).length > 1000) throw new Error('Too large')

@@ -6,8 +6,20 @@ When a bridge is exploited, the damage spreads across chains faster than any tea
 
 Built for the **Reactive Omni Buildathon**, track **Every Second Counts**.
 
-- Live demo: (Render link, see below)
+- Live demo: https://firebreak-63zx.onrender.com
 - Recorded on-chain runs: [`deployments/DEMO.md`](deployments/DEMO.md)
+- Response times over 6 attacks in a row: [`deployments/BENCH.md`](deployments/BENCH.md)
+
+## How fast
+
+The same forged-mint attack, run 6 times in a row on testnet, timed from the forged mint confirming on Base:
+
+| | Fastest | Median | Slowest |
+|---|---:|---:|---:|
+| Base halted | 1.00 s | 1.38 s | 2.41 s |
+| Unichain halted | 2.48 s | 2.75 s | 3.81 s |
+
+The attacker's exit through the bridge was blocked in every run. By the chain's own block timestamps, Base was halted a median of 1 s after the forged mint's block. Every run, with links to each transaction, is in [`deployments/BENCH.md`](deployments/BENCH.md).
 
 ## The problem
 

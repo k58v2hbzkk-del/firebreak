@@ -194,3 +194,25 @@ async function loadRuns(showLatest = true) {
     .join('')
 }
 loadRuns()
+
+// ---------------------------------------------------------------- response times over repeated runs
+async function loadBench() {
+  const { bench } = await fetch('/api/bench').then((r) => r.json()).catch(() => ({}))
+  if (!bench?.stats?.baseMs) return
+  const sec = (ms) => (ms == null ? '–' : `${(ms / 1000).toFixed(2)} s`)
+  const st = bench.stats
+  $('#statLatency').textContent = `~${(st.baseMs.median / 1000).toFixed(1)} s`
+  const url = (h) => `https://sepolia.basescan.org/tx/${h}`
+  $('#bench').innerHTML = `
+    <div class="bench-head"><h3>Response time, ${bench.runs.length} attacks in a row</h3><p class="muted">From the forged mint confirming on Base to each chain halting. Every run is a real transaction you can open.</p></div>
+    <div class="bench-stats">
+      <div><span>Median, Base halted</span><b>${sec(st.baseMs.median)}</b></div>
+      <div><span>Fastest</span><b>${sec(st.baseMs.min)}</b></div>
+      <div><span>Slowest</span><b>${sec(st.baseMs.max)}</b></div>
+      <div><span>Median, Unichain halted</span><b>${sec(st.uniMs?.median)}</b></div>
+    </div>
+    <table class="bench-table"><thead><tr><th>Run</th><th>Breach seen</th><th>Base halted</th><th>Unichain halted</th><th>Forged mint</th><th>Halt on Base</th></tr></thead><tbody>
+    ${bench.runs.map((r) => `<tr><td>${r.run}</td><td>${sec(r.breachMs)}</td><td>${sec(r.baseMs)}</td><td>${sec(r.uniMs)}</td><td><a href="${url(r.mintHash)}" target="_blank" rel="noopener">${r.mintHash.slice(0, 10)}…</a></td><td>${r.baseHash ? `<a href="${url(r.baseHash)}" target="_blank" rel="noopener">${r.baseHash.slice(0, 10)}…</a>` : '–'}</td></tr>`).join('')}
+    </tbody></table>`
+}
+loadBench()
