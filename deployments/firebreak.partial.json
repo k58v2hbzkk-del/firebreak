@@ -1,0 +1,37 @@
+{
+  "c": {
+    "rsETH": "0xf1e35894139725822f30073b924da4d23b680782",
+    "escrow": "0xb655dd9f9c562afe50f13ab41f2975c6945ee5e7",
+    "rsETHb": "0x09f76b0332c9d5641421e5a0b01dc8e590af2be6",
+    "minter": "0x012ad07ae2656b6cc628c01848e6eec1a30dd090",
+    "tUSD": "0x0ea80360c9ff7a1598c779a8a6b0821365b63714",
+    "pool": "0xea7f1baae748457977e38946c8ea0e08362d5b72",
+    "reactive": "0x4cfca7aedab62c0f13a5a2a83716d6bb43bb69ff",
+    "guardBase": "0xce787168b0eadf976a2b56ba5f761c0b9fba34a3",
+    "guardUni": "0xc23f166b20f1c209cfc97721584533f75be74062"
+  },
+  "txs": {},
+  "done": {
+    "rsETH": true,
+    "escrow": true,
+    "rsETHb": true,
+    "minter": true,
+    "setMinter": true,
+    "tUSD": true,
+    "pool": true,
+    "fundPool": true,
+    "reactive": true,
+    "guardBase": true,
+    "guardUni": true,
+    "tMinter": true,
+    "tPool": true,
+    "tEscrow": true,
+    "gMinter": true,
+    "gPool": true,
+    "gEscrow": true,
+    "subscribe": true,
+    "approvePool": true,
+    "mintRs": true,
+    "approveEscrow": true
+  }
+}

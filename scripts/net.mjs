@@ -76,7 +76,18 @@ export async function deploy(c, account, name, args = [], value = 0n, file) {
 
 export async function send(c, account, address, abi, functionName, args = [], opts = {}) {
   const p = pub(c)
-  const { request } = await p.simulateContract({ account, address, abi, functionName, args, ...opts })
+  // public testnet RPCs sit behind load balancers: a node can lag a block behind the one that
+  // confirmed our previous transaction, so retry the simulation a few times before giving up
+  let request
+  for (let i = 0; ; i++) {
+    try {
+      ;({ request } = await p.simulateContract({ account, address, abi, functionName, args, ...opts }))
+      break
+    } catch (e) {
+      if (i >= 5) throw e
+      await sleep(2000)
+    }
+  }
   const hash = await wallet(c, account).writeContract({ ...request, ...(await fees(c)) })
   const r = await p.waitForTransactionReceipt({ hash, timeout: 180_000 })
   if (r.status !== 'success') throw new Error(`${functionName} failed on ${c.name}: ${hash}`)

@@ -1,1 +1,1 @@
-deploy+demo # explicit Lasna fees
+deploy+demo # resume from run 3
