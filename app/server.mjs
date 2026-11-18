@@ -80,8 +80,10 @@ let lastRun = 0
 let day = ''
 let today = 0
 
+const big = (_, v) => (typeof v === 'bigint' ? v.toString() : v)
 function broadcast(ev) {
   if (!current) return
+  ev = JSON.parse(JSON.stringify(ev, big))
   current.events.push(ev)
   for (const res of current.listeners) res.write(`data: ${JSON.stringify(ev)}\n\n`)
 }
@@ -99,20 +101,31 @@ async function startAttack(kind) {
   lastRun = Date.now()
   ;(async () => {
     const { forgedMint, forgedRelease, reset } = await import('../scripts/attack.mjs')
+    let cleaned = false
+    try {
+      // never start an attack on a system still halted from an earlier run
+      const s = await state()
+      if (s.books?.armed === false || s.halted?.minter || s.halted?.pool || s.halted?.escrow) {
+        broadcast({ type: 'log', line: 'Re-arming Firebreak from the last run first…' })
+        await reset({ log: () => {} })
+      }
+    } catch {}
     broadcast({ type: 'start', kind })
     try {
       const log = (line) => broadcast({ type: 'log', line })
       const out = kind === 'forgedRelease' ? await forgedRelease({ log, tries: 6 }) : await forgedMint({ log })
       for (const s of out.timeline) broadcast({ type: 'step', step: s })
-      runs.unshift(out)
+      runs.unshift(JSON.parse(JSON.stringify(out, big)))
       runs.splice(12)
       broadcast({ type: 'result', run: out })
       broadcast({ type: 'log', line: 'Governance cleanup: clawing back forged tokens, re-arming, resuming…' })
       await reset({ log: (line) => broadcast({ type: 'log', line }) })
+      cleaned = true
       broadcast({ type: 'done' })
     } catch (e) {
       broadcast({ type: 'error', message: String(e?.shortMessage ?? e?.message ?? e).split('\n')[0] })
     } finally {
+      if (!cleaned) await reset({ log: () => {} }).catch(() => {})
       for (const res of current.listeners) res.end()
       current = null
       lastRun = Date.now()
