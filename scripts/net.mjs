@@ -6,14 +6,17 @@ import { privateKeyToAccount } from 'viem/accounts'
 
 export const ROOT = path.resolve(import.meta.dirname, '..')
 
-const chain = (id, name, rpc, explorer, symbol = 'ETH') =>
-  defineChain({ id, name, nativeCurrency: { name: symbol, symbol, decimals: 18 }, rpcUrls: { default: { http: [rpc] } }, blockExplorers: { default: { name: 'explorer', url: explorer } }, testnet: true })
+const chain = (id, name, rpc, explorer, symbol = 'ETH', fees) =>
+  defineChain({ id, name, nativeCurrency: { name: symbol, symbol, decimals: 18 }, rpcUrls: { default: { http: [rpc] } }, blockExplorers: { default: { name: 'explorer', url: explorer } }, testnet: true, ...(fees ? { fees } : {}) })
 
 export const CHAINS = {
   sepolia: chain(11155111, 'Sepolia', process.env.SEPOLIA_RPC ?? 'https://ethereum-sepolia-rpc.publicnode.com', 'https://sepolia.etherscan.io'),
   base: chain(84532, 'Base Sepolia', process.env.BASE_RPC ?? 'https://sepolia.base.org', 'https://sepolia.basescan.org'),
   uni: chain(1301, 'Unichain Sepolia', process.env.UNI_RPC ?? 'https://sepolia.unichain.org', 'https://sepolia.uniscan.xyz'),
-  lasna: chain(5318007, 'Reactive Lasna', process.env.LASNA_RPC ?? 'https://lasna-rpc.rnk.dev/', 'https://lasna.reactscan.net', 'lREACT'),
+  lasna: chain(5318007, 'Reactive Lasna', process.env.LASNA_RPC ?? 'https://lasna-rpc.rnk.dev/', 'https://lasna.reactscan.net', 'lREACT', {
+    // Lasna rejects a zero priority fee ("gas tip cap 0, minimum needed 1")
+    maxPriorityFeePerGas: async () => 1_000_000_000n,
+  }),
 }
 
 export const ADDR = {
