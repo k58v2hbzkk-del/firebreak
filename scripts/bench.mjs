@@ -10,7 +10,9 @@ const { base, uni, lasna } = CHAINS
 async function receiptBlock(ch, hash) {
   for (let i = 0; i < 10; i++) {
     try {
-      return Number((await pub(ch).waitForTransactionReceipt({ hash, timeout: 60_000 })).blockNumber)
+      const n = (await pub(ch).waitForTransactionReceipt({ hash, timeout: 60_000 })).blockNumber
+      const b = await pub(ch).getBlock({ blockNumber: n })
+      return { n: Number(n), ts: Number(b.timestamp) }
     } catch {
       await sleep(1000)
     }
@@ -41,7 +43,15 @@ export async function bench(n = 5) {
         blocked: r.timeline.filter((s) => s.kind === 'blocked').map((s) => ({ label: s.label, hash: s.hash, chain: s.chain })),
         losses: r.timeline.filter((s) => s.kind === 'loss').length,
       }
-      if (row.baseHash) row.baseBlocks = (await receiptBlock(base, row.baseHash)) - row.mintBlock
+      row.steps = r.timeline.map((x) => ({ ms: x.ms, chain: x.chain, kind: x.kind, label: x.label, hash: x.hash }))
+      const m = await receiptBlock(base, row.mintHash)
+      const hbB = row.baseHash && (await receiptBlock(base, row.baseHash))
+      const huB = row.uniHash && (await receiptBlock(uni, row.uniHash))
+      row.mintBlockTime = m?.ts
+      if (hbB) Object.assign(row, { baseHaltBlock: hbB.n, baseBlocks: hbB.n - m.n, baseHaltBlockTime: hbB.ts, baseBlockSecs: hbB.ts - m.ts })
+      if (huB) Object.assign(row, { uniHaltBlock: huB.n, uniHaltBlockTime: huB.ts, uniBlockSecs: huB.ts - m.ts })
+      const borrow = r.timeline.find((x) => x.label.includes('borrow'))
+      row.borrow = borrow ? borrow.kind : 'not tried'
       console.log(JSON.stringify(row))
       rows.push(row)
     } catch (e) {
@@ -55,7 +65,7 @@ export async function bench(n = 5) {
     if (!v.length) return null
     return { min: v[0], median: v[Math.floor(v.length / 2)], max: v[v.length - 1], avg: Math.round(v.reduce((a, b) => a + b, 0) / v.length) }
   }
-  const out = { at: new Date().toISOString(), runs: rows, stats: { breachMs: stat('breachMs'), baseMs: stat('baseMs'), uniMs: stat('uniMs'), baseBlocks: stat('baseBlocks') } }
+  const out = { at: new Date().toISOString(), runs: rows, stats: { breachMs: stat('breachMs'), baseMs: stat('baseMs'), uniMs: stat('uniMs'), baseBlocks: stat('baseBlocks'), baseBlockSecs: stat('baseBlockSecs'), uniBlockSecs: stat('uniBlockSecs') } }
   fs.writeFileSync(path.join(ROOT, 'deployments', 'bench.json'), JSON.stringify(out, null, 2))
   fs.writeFileSync(path.join(ROOT, 'deployments', 'BENCH.md'), md(out))
   console.log('\nwrote deployments/BENCH.md')
