@@ -1,162 +1,580 @@
 {
-  "at": "2026-11-18T10:25:48.017Z",
+  "at": "2026-11-18T10:31:50.236Z",
   "runs": [
     {
       "run": 1,
-      "at": "2026-11-18T10:24:28.019Z",
-      "mintHash": "0x636b2f43b31d92514e5ad9a3bf004915b81a7dd16f00546313ed97c65afc4909",
-      "mintBlock": 60377958,
-      "breachMs": 1819,
-      "baseMs": 2093,
-      "uniMs": 3201,
-      "breachHash": "0x64f415c960346fa0116916e22c551e287cb74ed4c48b39500470f2a319a36535",
-      "baseHash": "0x4133c7ed908e4bc2fef80c367cc9ee52205078badf050c6815e07ef3ecc41a13",
-      "uniHash": "0x9fcb6736f7fa134935a5cfde76b0c18ad81511132487c0206e70498eccf40d54",
-      "blocked": [
-        {
-          "label": "Bridge releases 50 real rsETH on Unichain",
-          "hash": "0xc73bf4c48ca9e35372424a44c129a3d4cc5b1212aa27948b95186e0fa39e0ba8",
-          "chain": "uni"
-        }
-      ],
-      "losses": 1,
-      "baseBlocks": 7
-    },
-    {
-      "run": 2,
-      "at": "2026-11-18T10:24:43.156Z",
-      "mintHash": "0xb676e7134cbc6519f46ecc8c8d20284d2280f77ec5e26f345d9e7f78ff4282c0",
-      "mintBlock": 60378029,
-      "breachMs": 871,
-      "baseMs": 1144,
-      "uniMs": 2502,
-      "breachHash": "0x88e9126e69d826848cb1e6a475fe15b68d99669d9ceaf8014068679966c947ed",
-      "baseHash": "0xccd3940b07f20f42a6080d117b4cfe17a8bdf70ca20f1ea11aec96c62e8d623f",
-      "uniHash": "0xacdaacc53512af5ffa5b4b0dfccf54aa337bb40bd32e91af980195f494e10b71",
+      "at": "2026-11-18T10:30:28.305Z",
+      "mintHash": "0xd014fe3b3c6c1a7da5048bdc12e7e4d4ee13cdce412e506178bc95b74fa64318",
+      "mintBlock": 60379753,
+      "breachMs": 1075,
+      "baseMs": 1349,
+      "uniMs": 2959,
+      "breachHash": "0x64c517eb579b019ec7c30b89bf9c26ee0445a3d00fb135cc550151e07d067faa",
+      "baseHash": "0xa32d37d8d4dfea8de21b1fa4b630aac73e52c778b42c54ae8a02e0d6a80eb1ae",
+      "uniHash": "0xa71381052399c84a69cd9cd301ec0ed654e31952183b64f9a3156f90b0e008e2",
       "blocked": [
         {
           "label": "Attacker tries to borrow 105,000 tUSD",
-          "hash": "0x9f9dfbad7609f035559be70fd4f07c8eb26570b8b3befdddd6858653b5769b43",
+          "hash": "0x34a20e41dbea00c9195f98d8720498e447d37549c7b8a8960a6c1f6510862b9d",
           "chain": "base"
         },
         {
           "label": "Bridge releases 50 real rsETH on Unichain",
-          "hash": "0xbd325b29e635081d0955bddbd06f06a1d03f3ea799430039c17f806ab4e87629",
+          "hash": "0xb13037945be05fac9b96be2a6a67f73ab05be38eae5899ee951f152c531b813b",
           "chain": "uni"
         }
       ],
       "losses": 0,
-      "baseBlocks": 6
+      "steps": [
+        {
+          "ms": 348,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Forged mint of 100 rsETH.b lands on Base",
+          "hash": "0xd014fe3b3c6c1a7da5048bdc12e7e4d4ee13cdce412e506178bc95b74fa64318"
+        },
+        {
+          "ms": 714,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker posts 50 as collateral",
+          "hash": "0x57c967a3a997bd5855d9554c68b7fba9910812e17a4a1d43649b7bed3fdfc5ab"
+        },
+        {
+          "ms": 714,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker burns 50 to exit through the bridge",
+          "hash": "0xa14c9ab4856dc21e7165b496744173c3e283679b6e9b546b60c9f80a9630bcba"
+        },
+        {
+          "ms": 1423,
+          "chain": "lasna",
+          "kind": "firebreak",
+          "label": "Firebreak sees the books break and calls both chains",
+          "hash": "0x64c517eb579b019ec7c30b89bf9c26ee0445a3d00fb135cc550151e07d067faa"
+        },
+        {
+          "ms": 1697,
+          "chain": "base",
+          "kind": "firebreak",
+          "label": "Base: bridge minter and lending pool halted",
+          "hash": "0xa32d37d8d4dfea8de21b1fa4b630aac73e52c778b42c54ae8a02e0d6a80eb1ae"
+        },
+        {
+          "ms": 1886,
+          "chain": "base",
+          "kind": "blocked",
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0x34a20e41dbea00c9195f98d8720498e447d37549c7b8a8960a6c1f6510862b9d"
+        },
+        {
+          "ms": 3307,
+          "chain": "uni",
+          "kind": "firebreak",
+          "label": "Unichain: bridge vault halted",
+          "hash": "0xa71381052399c84a69cd9cd301ec0ed654e31952183b64f9a3156f90b0e008e2"
+        },
+        {
+          "ms": 9352,
+          "chain": "uni",
+          "kind": "blocked",
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xb13037945be05fac9b96be2a6a67f73ab05be38eae5899ee951f152c531b813b"
+        }
+      ],
+      "mintBlockTime": 1794997819,
+      "baseHaltBlock": 60379757,
+      "baseBlocks": 4,
+      "baseHaltBlockTime": 1794997820,
+      "baseBlockSecs": 1,
+      "uniHaltBlock": 68145393,
+      "uniHaltBlockTime": 1794997821,
+      "uniBlockSecs": 2,
+      "borrow": "blocked"
+    },
+    {
+      "run": 2,
+      "at": "2026-11-18T10:30:44.270Z",
+      "mintHash": "0xce063108141308f34e4993557055aefc6a1dbdce4668f63339bec52eee0ff9d3",
+      "mintBlock": 60379833,
+      "breachMs": 2138,
+      "baseMs": 2412,
+      "uniMs": 3809,
+      "breachHash": "0xa498c9543d6215e2dea64b29298e1e03cb1fa04a4d781d973730f9222c1d5dc6",
+      "baseHash": "0x2e299f61b1881b9257ebe8c941bf04c7fb41695d891d9eeac774d2a1c93ceb9b",
+      "uniHash": "0x8033cba034032dfca230db80c98eee895c58e7235b54ce81d490fd43ce0828a6",
+      "blocked": [
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0x9dbefcc1116eb095b6cd6b1f076e7235cc840ed64118e701e6c6cc56f8e005d7",
+          "chain": "uni"
+        }
+      ],
+      "losses": 0,
+      "steps": [
+        {
+          "ms": 323,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Forged mint of 100 rsETH.b lands on Base",
+          "hash": "0xce063108141308f34e4993557055aefc6a1dbdce4668f63339bec52eee0ff9d3"
+        },
+        {
+          "ms": 1497,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker posts 50 as collateral",
+          "hash": "0x8e449a218cb3c0cb8fff9a648f6adc6d23fde0aca4b6f4a799242ada8b7aba57"
+        },
+        {
+          "ms": 1497,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker burns 50 to exit through the bridge",
+          "hash": "0x7f3f6fc6b5c5ddc7967d84381a7860e1ad9678253889eac9bb611b044d1e6e53"
+        },
+        {
+          "ms": 1868,
+          "chain": "base",
+          "kind": "failed",
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0x4ba64f29013d794ca60b9db2fc15016c5f69c9f72d1826ee7460b6138a1ad8e3"
+        },
+        {
+          "ms": 2461,
+          "chain": "lasna",
+          "kind": "firebreak",
+          "label": "Firebreak sees the books break and calls both chains",
+          "hash": "0xa498c9543d6215e2dea64b29298e1e03cb1fa04a4d781d973730f9222c1d5dc6"
+        },
+        {
+          "ms": 2735,
+          "chain": "base",
+          "kind": "firebreak",
+          "label": "Base: bridge minter and lending pool halted",
+          "hash": "0x2e299f61b1881b9257ebe8c941bf04c7fb41695d891d9eeac774d2a1c93ceb9b"
+        },
+        {
+          "ms": 4132,
+          "chain": "uni",
+          "kind": "firebreak",
+          "label": "Unichain: bridge vault halted",
+          "hash": "0x8033cba034032dfca230db80c98eee895c58e7235b54ce81d490fd43ce0828a6"
+        },
+        {
+          "ms": 9187,
+          "chain": "uni",
+          "kind": "blocked",
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0x9dbefcc1116eb095b6cd6b1f076e7235cc840ed64118e701e6c6cc56f8e005d7"
+        }
+      ],
+      "mintBlockTime": 1794997835,
+      "baseHaltBlock": 60379842,
+      "baseBlocks": 9,
+      "baseHaltBlockTime": 1794997837,
+      "baseBlockSecs": 2,
+      "uniHaltBlock": 68145410,
+      "uniHaltBlockTime": 1794997838,
+      "uniBlockSecs": 3,
+      "borrow": "failed"
     },
     {
       "run": 3,
-      "at": "2026-11-18T10:24:58.990Z",
-      "mintHash": "0x7a4c685919c727db3c303de564ca8888396449a3e585a9493a40652764354278",
-      "mintBlock": 60378108,
-      "breachMs": 1742,
-      "baseMs": 2022,
-      "uniMs": 3647,
-      "breachHash": "0x9f94edd26d4b54c32296590c71e3fd6275622de8a45b0c727a5195ab4f6db040",
-      "baseHash": "0x9ab41855b74623b051efc48bdfe88a639eaed706cde7c21676571a0eb1fcc419",
-      "uniHash": "0xf161bf820d19a8009df641fdb3af1556a8e4394eb404bf8ff3020ff3c4263f17",
+      "at": "2026-11-18T10:30:59.066Z",
+      "mintHash": "0x5a72464215891d7d76eb648899ae9e183321dd344ac91cc8e686d2d9d535fa35",
+      "mintBlock": 60379914,
+      "breachMs": 1381,
+      "baseMs": 1654,
+      "uniMs": 2745,
+      "breachHash": "0x83bb05025fdb89d2647a73c23a080d38860244b7af8132520f6d3449e80d33c6",
+      "baseHash": "0xcf8621d1905cf8e1bfe41757e0efd634afb4b36745d03a1d1a7104e6531ee08f",
+      "uniHash": "0x5824d662d609b3c933dfb120db568a4ad7064c23f753409ed747257fe2c04d03",
       "blocked": [
         {
           "label": "Bridge releases 50 real rsETH on Unichain",
-          "hash": "0xe2f638c2ddf483db535db4227ed5c8493a4804dce90a97aea1599310ea4034b7",
+          "hash": "0xce5033b256c07a44d02a21a94b3db4a33830e91c6fc676d02213265cd31ea21e",
           "chain": "uni"
         }
       ],
       "losses": 0,
-      "baseBlocks": 9
+      "steps": [
+        {
+          "ms": 142,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Forged mint of 100 rsETH.b lands on Base",
+          "hash": "0x5a72464215891d7d76eb648899ae9e183321dd344ac91cc8e686d2d9d535fa35"
+        },
+        {
+          "ms": 303,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker posts 50 as collateral",
+          "hash": "0xe4fc49af92ae1017ad3de08dc8bb5d17d8b5e94c0c6eb3cb1e37f3b9625f6860"
+        },
+        {
+          "ms": 303,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker burns 50 to exit through the bridge",
+          "hash": "0x4163c1f0bdce1e63c522dfa65efdfc9d80b6d816725ec979c459e915164fd11f"
+        },
+        {
+          "ms": 972,
+          "chain": "base",
+          "kind": "failed",
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0xfe28d87ff3cd488237786ccdeee041d877cc9907623a3abd67493d9f849e7ca9"
+        },
+        {
+          "ms": 1523,
+          "chain": "lasna",
+          "kind": "firebreak",
+          "label": "Firebreak sees the books break and calls both chains",
+          "hash": "0x83bb05025fdb89d2647a73c23a080d38860244b7af8132520f6d3449e80d33c6"
+        },
+        {
+          "ms": 1796,
+          "chain": "base",
+          "kind": "firebreak",
+          "label": "Base: bridge minter and lending pool halted",
+          "hash": "0xcf8621d1905cf8e1bfe41757e0efd634afb4b36745d03a1d1a7104e6531ee08f"
+        },
+        {
+          "ms": 2887,
+          "chain": "uni",
+          "kind": "firebreak",
+          "label": "Unichain: bridge vault halted",
+          "hash": "0x5824d662d609b3c933dfb120db568a4ad7064c23f753409ed747257fe2c04d03"
+        },
+        {
+          "ms": 7739,
+          "chain": "uni",
+          "kind": "blocked",
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xce5033b256c07a44d02a21a94b3db4a33830e91c6fc676d02213265cd31ea21e"
+        }
+      ],
+      "mintBlockTime": 1794997851,
+      "baseHaltBlock": 60379921,
+      "baseBlocks": 7,
+      "baseHaltBlockTime": 1794997853,
+      "baseBlockSecs": 2,
+      "uniHaltBlock": 68145425,
+      "uniHaltBlockTime": 1794997853,
+      "uniBlockSecs": 2,
+      "borrow": "failed"
     },
     {
       "run": 4,
-      "at": "2026-11-18T10:25:12.983Z",
-      "mintHash": "0x19e6bf51588fc782e475a7e33eec6055ee353099bc0b627b1e96837db56a5144",
-      "mintBlock": 60378183,
-      "breachMs": 1854,
-      "baseMs": 2136,
-      "uniMs": 3228,
-      "breachHash": "0x3620e75f9c87b842e3eaf600b8a4b4f35782a5d83aca48fa5d8be4b3a96230b3",
-      "baseHash": "0x450afc7e55f5d7d110135e29fc70365dba2f758598b05592489c1e5e0fc5b1a4",
-      "uniHash": "0x7908b0b643fe103aaa40851400ee1b5b14f301dfd1efff99007cbbbba2e097e0",
+      "at": "2026-11-18T10:31:13.185Z",
+      "mintHash": "0xf92eefc824044fbe13203f9684805d5ca476bbacd1a703f60e916769605f5f74",
+      "mintBlock": 60379983,
+      "breachMs": 1113,
+      "baseMs": 1384,
+      "uniMs": 2746,
+      "breachHash": "0xb9d893da9515b5f9cc35a9cd519ecde896340d7d0910c9f0065831f329c04244",
+      "baseHash": "0xa7a75974d06d8f632db36c23cd07ccc67c7a714b755a9d3f021dfa0b5f630724",
+      "uniHash": "0x10abae7e255dd76661cb52c9598d67cf6b1a7eb5ac4599a0f3e1c7a5a891bd49",
       "blocked": [
         {
           "label": "Bridge releases 50 real rsETH on Unichain",
-          "hash": "0x1a2d89acd163994240e54abf37d16d05fa593818c6a26abdd24b7de1c230980e",
+          "hash": "0x6f3eef3fd07163b4e0abbbefd6564fdec0c2498708f07b483099d28fc76f46f8",
           "chain": "uni"
         }
       ],
       "losses": 0,
-      "baseBlocks": 8
+      "steps": [
+        {
+          "ms": 335,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Forged mint of 100 rsETH.b lands on Base",
+          "hash": "0xf92eefc824044fbe13203f9684805d5ca476bbacd1a703f60e916769605f5f74"
+        },
+        {
+          "ms": 706,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker posts 50 as collateral",
+          "hash": "0xfd0ae763a5681dac9d732e77beb52afaefc8d98fbacdd91b1278c0759eea8e22"
+        },
+        {
+          "ms": 706,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker burns 50 to exit through the bridge",
+          "hash": "0x8ed72ca0f5bcb4a4798ab17a98f9a50ba75a3192ef6f73b6880f0587db34edf1"
+        },
+        {
+          "ms": 1357,
+          "chain": "base",
+          "kind": "failed",
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0xc2766c18785473fc21030361a8860b5e5f710d8aa34202301c14b96ce5cd242a"
+        },
+        {
+          "ms": 1448,
+          "chain": "lasna",
+          "kind": "firebreak",
+          "label": "Firebreak sees the books break and calls both chains",
+          "hash": "0xb9d893da9515b5f9cc35a9cd519ecde896340d7d0910c9f0065831f329c04244"
+        },
+        {
+          "ms": 1719,
+          "chain": "base",
+          "kind": "firebreak",
+          "label": "Base: bridge minter and lending pool halted",
+          "hash": "0xa7a75974d06d8f632db36c23cd07ccc67c7a714b755a9d3f021dfa0b5f630724"
+        },
+        {
+          "ms": 3081,
+          "chain": "uni",
+          "kind": "firebreak",
+          "label": "Unichain: bridge vault halted",
+          "hash": "0x10abae7e255dd76661cb52c9598d67cf6b1a7eb5ac4599a0f3e1c7a5a891bd49"
+        },
+        {
+          "ms": 8219,
+          "chain": "uni",
+          "kind": "blocked",
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0x6f3eef3fd07163b4e0abbbefd6564fdec0c2498708f07b483099d28fc76f46f8"
+        }
+      ],
+      "mintBlockTime": 1794997865,
+      "baseHaltBlock": 60379990,
+      "baseBlocks": 7,
+      "baseHaltBlockTime": 1794997866,
+      "baseBlockSecs": 1,
+      "uniHaltBlock": 68145439,
+      "uniHaltBlockTime": 1794997867,
+      "uniBlockSecs": 2,
+      "borrow": "failed"
     },
     {
       "run": 5,
-      "at": "2026-11-18T10:25:27.967Z",
-      "mintHash": "0xc8ed0bc1302b267bba0ae344fe0d34bd47d1d445644ef3e46e818277282a0aaf",
-      "mintBlock": 60378258,
-      "breachMs": 1108,
-      "baseMs": 1383,
-      "uniMs": 2740,
-      "breachHash": "0xee57a9af7964ce1032844f01b54e22a5bd039ad744ae1df6122e09a092cdc7b5",
-      "baseHash": "0x89cb95b18b8642bbc93678e0e9332fa97abee1991e73c5f775e03b0ad4987810",
-      "uniHash": "0xaded89897e3745d8404652d3befc5df390d91bbd33f876da2dad2df7b7602eb3",
+      "at": "2026-11-18T10:31:28.322Z",
+      "mintHash": "0x3289480d27a907c39e843af831f8e265cacce617ca15f199751b117d582ddecf",
+      "mintBlock": 60380059,
+      "breachMs": 1080,
+      "baseMs": 1002,
+      "uniMs": 2713,
+      "breachHash": "0xa5cb958d9bbb7c7ea81e8b65e7e7684edf77e96585010dfeaa5f738dcfee8e2c",
+      "baseHash": "0xfaae5c7ca030e6575260fdbfcc171f6e595258285d66c173919132ad1cf14508",
+      "uniHash": "0xa54ab311ee68d6231a73fe485f6d1da07a9cad02be3590996234de0b703d9a3a",
       "blocked": [
         {
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0x86daab4a25ae1ae47d8049c22f63394e54be716682aa6c30ead56cb82bd124e0",
+          "chain": "base"
+        },
+        {
           "label": "Bridge releases 50 real rsETH on Unichain",
-          "hash": "0xf0589b47dfb3a69ba77055fdc2ef084128bd7c6fc72346d7ce6ea5d40e475810",
+          "hash": "0xd75081d15dfcaa4dadaa812e37fdab540ebde969ae6aab3f574b9ee738673601",
           "chain": "uni"
         }
       ],
       "losses": 0,
-      "baseBlocks": 6
+      "steps": [
+        {
+          "ms": 335,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Forged mint of 100 rsETH.b lands on Base",
+          "hash": "0x3289480d27a907c39e843af831f8e265cacce617ca15f199751b117d582ddecf"
+        },
+        {
+          "ms": 682,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker posts 50 as collateral",
+          "hash": "0x8f5515d7127bcca14d14b359cfa5f275c90225c4ab4cde1faa913b7dff839c4c"
+        },
+        {
+          "ms": 682,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker burns 50 to exit through the bridge",
+          "hash": "0xcd777a862d45adba30202fc04784d682dfff4c693ad5b5f54989b2e3c71abd04"
+        },
+        {
+          "ms": 1337,
+          "chain": "base",
+          "kind": "firebreak",
+          "label": "Base: bridge minter and lending pool halted",
+          "hash": "0xfaae5c7ca030e6575260fdbfcc171f6e595258285d66c173919132ad1cf14508"
+        },
+        {
+          "ms": 1338,
+          "chain": "base",
+          "kind": "blocked",
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0x86daab4a25ae1ae47d8049c22f63394e54be716682aa6c30ead56cb82bd124e0"
+        },
+        {
+          "ms": 1415,
+          "chain": "lasna",
+          "kind": "firebreak",
+          "label": "Firebreak sees the books break and calls both chains",
+          "hash": "0xa5cb958d9bbb7c7ea81e8b65e7e7684edf77e96585010dfeaa5f738dcfee8e2c"
+        },
+        {
+          "ms": 3048,
+          "chain": "uni",
+          "kind": "firebreak",
+          "label": "Unichain: bridge vault halted",
+          "hash": "0xa54ab311ee68d6231a73fe485f6d1da07a9cad02be3590996234de0b703d9a3a"
+        },
+        {
+          "ms": 8124,
+          "chain": "uni",
+          "kind": "blocked",
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xd75081d15dfcaa4dadaa812e37fdab540ebde969ae6aab3f574b9ee738673601"
+        }
+      ],
+      "mintBlockTime": 1794997880,
+      "baseHaltBlock": 60380064,
+      "baseBlocks": 5,
+      "baseHaltBlockTime": 1794997881,
+      "baseBlockSecs": 1,
+      "uniHaltBlock": 68145454,
+      "uniHaltBlockTime": 1794997882,
+      "uniBlockSecs": 2,
+      "borrow": "blocked"
     },
     {
       "run": 6,
-      "at": "2026-11-18T10:25:42.046Z",
-      "mintHash": "0x9766d78d18ce13c14d44c4ca7fc10411fc11762da46bfb934e2b3811eef4e9c1",
-      "mintBlock": 60378330,
-      "breachMs": 1839,
-      "baseMs": 2116,
-      "uniMs": 3721,
-      "breachHash": "0x5be4bdd20337a34c91583bbcdff801f6b228009f29d676c226d4fa9e7f2412cc",
-      "baseHash": "0x11d4f2941cc69e3bb0049d63a5e64e3f79f816ada74f2013502aa528b20d1a60",
-      "uniHash": "0xf05517cf0d026c501c06545e7092e939fb8e8dec5400c7a5b3fa5196ba6c2a1c",
+      "at": "2026-11-18T10:31:43.379Z",
+      "mintHash": "0x452586c6210e73a38ba43d8350a02cdbe49bad92c71b089bd9faae239606ca79",
+      "mintBlock": 60380134,
+      "breachMs": 1119,
+      "baseMs": 1034,
+      "uniMs": 2479,
+      "breachHash": "0x1f6c3d4b928511693a3ca913a9561dee2a9658bda476b4aaa19523d7f31a35a2",
+      "baseHash": "0xc767936d2735222968bb77896df8afe6a4dc896528a5da48e43340be9c881df4",
+      "uniHash": "0x2403a1da9b55d4c957b2f39acdeaa2d8fb5153e407d419ce12c657baa036efce",
       "blocked": [
         {
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0xe2c5d841f896d020f8d7c6592f2cd9eb127792c1a3e82f90ece995304ac89e89",
+          "chain": "base"
+        },
+        {
           "label": "Bridge releases 50 real rsETH on Unichain",
-          "hash": "0x3b3bb1e63cca52a50bd5b22a0c42f5f476c91cf220e77aea7a300dfec3ebb980",
+          "hash": "0x7a0778945ffd44100456cdb9350dfdc61aa9939ee27c034bae345fd2b58f2ba9",
           "chain": "uni"
         }
       ],
       "losses": 0,
-      "baseBlocks": 8
+      "steps": [
+        {
+          "ms": 308,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Forged mint of 100 rsETH.b lands on Base",
+          "hash": "0x452586c6210e73a38ba43d8350a02cdbe49bad92c71b089bd9faae239606ca79"
+        },
+        {
+          "ms": 683,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker posts 50 as collateral",
+          "hash": "0x1379a9e84f383c64f6b567687ae32c5f756546edc10c6d2b2b20b60e99da18ab"
+        },
+        {
+          "ms": 683,
+          "chain": "base",
+          "kind": "attack",
+          "label": "Attacker burns 50 to exit through the bridge",
+          "hash": "0x4d562245955cadfec83a2535641cccfe62927e0b6e45856d001f1e5ffd86cef8"
+        },
+        {
+          "ms": 1342,
+          "chain": "base",
+          "kind": "firebreak",
+          "label": "Base: bridge minter and lending pool halted",
+          "hash": "0xc767936d2735222968bb77896df8afe6a4dc896528a5da48e43340be9c881df4"
+        },
+        {
+          "ms": 1343,
+          "chain": "base",
+          "kind": "blocked",
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0xe2c5d841f896d020f8d7c6592f2cd9eb127792c1a3e82f90ece995304ac89e89"
+        },
+        {
+          "ms": 1427,
+          "chain": "lasna",
+          "kind": "firebreak",
+          "label": "Firebreak sees the books break and calls both chains",
+          "hash": "0x1f6c3d4b928511693a3ca913a9561dee2a9658bda476b4aaa19523d7f31a35a2"
+        },
+        {
+          "ms": 2787,
+          "chain": "uni",
+          "kind": "firebreak",
+          "label": "Unichain: bridge vault halted",
+          "hash": "0x2403a1da9b55d4c957b2f39acdeaa2d8fb5153e407d419ce12c657baa036efce"
+        },
+        {
+          "ms": 8123,
+          "chain": "uni",
+          "kind": "blocked",
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0x7a0778945ffd44100456cdb9350dfdc61aa9939ee27c034bae345fd2b58f2ba9"
+        }
+      ],
+      "mintBlockTime": 1794997895,
+      "baseHaltBlock": 60380139,
+      "baseBlocks": 5,
+      "baseHaltBlockTime": 1794997896,
+      "baseBlockSecs": 1,
+      "uniHaltBlock": 68145469,
+      "uniHaltBlockTime": 1794997897,
+      "uniBlockSecs": 2,
+      "borrow": "blocked"
     }
   ],
   "stats": {
     "breachMs": {
-      "min": 871,
-      "median": 1819,
-      "max": 1854,
-      "avg": 1539
+      "min": 1075,
+      "median": 1119,
+      "max": 2138,
+      "avg": 1318
     },
     "baseMs": {
-      "min": 1144,
-      "median": 2093,
-      "max": 2136,
-      "avg": 1816
+      "min": 1002,
+      "median": 1384,
+      "max": 2412,
+      "avg": 1473
     },
     "uniMs": {
-      "min": 2502,
-      "median": 3228,
-      "max": 3721,
-      "avg": 3173
+      "min": 2479,
+      "median": 2746,
+      "max": 3809,
+      "avg": 2909
     },
     "baseBlocks": {
-      "min": 6,
-      "median": 8,
+      "min": 4,
+      "median": 7,
       "max": 9,
-      "avg": 7
+      "avg": 6
+    },
+    "baseBlockSecs": {
+      "min": 1,
+      "median": 1,
+      "max": 2,
+      "avg": 1
+    },
+    "uniBlockSecs": {
+      "min": 2,
+      "median": 2,
+      "max": 3,
+      "avg": 2
     }
   }
 }
