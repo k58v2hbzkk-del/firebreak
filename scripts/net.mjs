@@ -56,9 +56,18 @@ export function artifact(name, file = `${name}.sol`) {
   return { abi: abis[name], bytecode: null }
 }
 
+/** Lasna rejects a zero tip; give it explicit EIP-1559 fees. Other chains: let viem decide. */
+export async function fees(c) {
+  if (c.id !== 5318007) return {}
+  const tip = 1_000_000_000n
+  const block = await pub(c).getBlock()
+  const base = block.baseFeePerGas ?? (await pub(c).getGasPrice())
+  return { maxPriorityFeePerGas: tip, maxFeePerGas: base * 2n + tip }
+}
+
 export async function deploy(c, account, name, args = [], value = 0n, file) {
   const { abi, bytecode } = artifact(name, file)
-  const hash = await wallet(c, account).deployContract({ abi, bytecode, args, value })
+  const hash = await wallet(c, account).deployContract({ abi, bytecode, args, value, ...(await fees(c)) })
   const r = await pub(c).waitForTransactionReceipt({ hash, timeout: 180_000 })
   if (r.status !== 'success') throw new Error(`${name} deploy failed on ${c.name}: ${hash}`)
   console.log(`  ${name.padEnd(18)} ${c.name.padEnd(16)} ${r.contractAddress}`)
@@ -68,7 +77,7 @@ export async function deploy(c, account, name, args = [], value = 0n, file) {
 export async function send(c, account, address, abi, functionName, args = [], opts = {}) {
   const p = pub(c)
   const { request } = await p.simulateContract({ account, address, abi, functionName, args, ...opts })
-  const hash = await wallet(c, account).writeContract(request)
+  const hash = await wallet(c, account).writeContract({ ...request, ...(await fees(c)) })
   const r = await p.waitForTransactionReceipt({ hash, timeout: 180_000 })
   if (r.status !== 'success') throw new Error(`${functionName} failed on ${c.name}: ${hash}`)
   return { hash, receipt: r }
