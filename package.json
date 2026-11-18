@@ -1,0 +1,16 @@
+{
+  "name": "firebreak",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Firebreak: a cross-chain circuit breaker for bridge exploits, run by Reactive Network",
+  "scripts": {
+    "fund": "node scripts/run.mjs fund",
+    "deploy": "node scripts/run.mjs deploy",
+    "demo": "node scripts/run.mjs demo",
+    "build": "esbuild app/src/main.mjs --bundle --minify --format=esm --target=es2022 --outfile=app/dist/app.js",
+    "start": "node app/server.mjs"
+  },
+  "dependencies": { "esbuild": "^0.28.2", "viem": "^2.21.0" },
+  "engines": { "node": ">=22" }
+}

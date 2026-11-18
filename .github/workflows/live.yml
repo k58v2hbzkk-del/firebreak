@@ -1,0 +1,42 @@
+name: live
+on:
+  workflow_dispatch:
+  push:
+    paths: [deploy.txt]
+permissions:
+  contents: write
+concurrency: live
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Libraries
+        working-directory: contracts
+        run: |
+          git clone --depth 1 https://github.com/Reactive-Network/reactive-lib-omni lib/reactive-lib
+          git clone --depth 1 https://github.com/foundry-rs/forge-std lib/forge-std
+          git clone --depth 1 --branch v5.1.0 https://github.com/OpenZeppelin/openzeppelin-contracts lib/openzeppelin-contracts
+      - name: Test
+        working-directory: contracts
+        run: forge test -vv
+      - name: Build
+        working-directory: contracts
+        run: forge build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Run
+        env:
+          DEPLOYER_KEY: ${{ secrets.DEPLOYER_KEY }}
+        run: node scripts/run.mjs "$(head -1 deploy.txt | cut -d' ' -f1)"
+      - name: Save results
+        if: always()
+        run: |
+          git config user.name "firebreak-bot"
+          git config user.email "firebreak-bot@users.noreply.github.com"
+          git add deployments || true
+          git diff --cached --quiet || (git commit -m "Live run on testnet: $(date -u +%FT%TZ)" && git push)
