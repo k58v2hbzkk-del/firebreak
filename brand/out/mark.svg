@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240"><g transform="translate(0 0) scale(1.0)">
+  <defs>
+    <linearGradient id="ea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF3B0A"/></linearGradient>
+    <mask id="ma" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+      <rect width="240" height="240" fill="#fff"/>
+      <g transform="rotate(18 120 120)"><rect x="104" y="0" width="32" height="240" fill="#000"/></g>
+    </mask>
+  </defs>
+  <g mask="url(#ma)">
+    <rect x="22" y="66" width="196" height="108" rx="54" fill="none" stroke="#111110" stroke-width="30"/>
+  </g>
+  <g transform="rotate(18 120 120)"><rect x="113" y="34" width="14" height="172" rx="7" fill="url(#ea)"/></g>
+</g></svg>

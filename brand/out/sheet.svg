@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000"><rect width="1600" height="1000" fill="#EEEDEA"/><rect x="40" y="40" width="740" height="560" rx="40" fill="#E4E2DD"/><g transform="translate(200 110) scale(1.75)">
+  <defs>
+    <linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF3B0A"/></linearGradient>
+    <mask id="mg" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+      <rect width="240" height="240" fill="#fff"/>
+      <g transform="rotate(18 120 120)"><rect x="104" y="0" width="32" height="240" fill="#000"/></g>
+    </mask>
+  </defs>
+  <g mask="url(#mg)">
+    <rect x="22" y="66" width="196" height="108" rx="54" fill="none" stroke="#111110" stroke-width="30"/>
+  </g>
+  <g transform="rotate(18 120 120)"><rect x="113" y="34" width="14" height="172" rx="7" fill="url(#eg)"/></g>
+</g><rect x="820" y="40" width="740" height="560" rx="40" fill="#111110"/><g transform="translate(980 110) scale(1.75)">
+  <defs>
+    <linearGradient id="eh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF3B0A"/></linearGradient>
+    <mask id="mh" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+      <rect width="240" height="240" fill="#fff"/>
+      <g transform="rotate(18 120 120)"><rect x="104" y="0" width="32" height="240" fill="#000"/></g>
+    </mask>
+  </defs>
+  <g mask="url(#mh)">
+    <rect x="22" y="66" width="196" height="108" rx="54" fill="none" stroke="#EEEDEA" stroke-width="30"/>
+  </g>
+  <g transform="rotate(18 120 120)"><rect x="113" y="34" width="14" height="172" rx="7" fill="url(#eh)"/></g>
+</g><rect x="40" y="640" width="1040" height="320" rx="40" fill="#fff"/><g transform="translate(90 700) scale(0.8333333333333334)">
+  <defs>
+    <linearGradient id="ei" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF3B0A"/></linearGradient>
+    <mask id="mi" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+      <rect width="240" height="240" fill="#fff"/>
+      <g transform="rotate(18 120 120)"><rect x="104" y="0" width="32" height="240" fill="#000"/></g>
+    </mask>
+  </defs>
+  <g mask="url(#mi)">
+    <rect x="22" y="66" width="196" height="108" rx="54" fill="none" stroke="#111110" stroke-width="30"/>
+  </g>
+  <g transform="rotate(18 120 120)"><rect x="113" y="34" width="14" height="172" rx="7" fill="url(#ei)"/></g>
+</g><text x="300" y="850" font-family="Inter Display, Inter, sans-serif" font-weight="600" font-size="150" letter-spacing="-6.8" fill="#111110">Firebreak</text><rect x="1120" y="640" width="440" height="320" rx="40" fill="#E4E2DD"/><rect x="1240" y="700" width="200" height="200" rx="46" fill="#111110"/><g transform="translate(1256 716) scale(0.7)">
+  <defs>
+    <linearGradient id="ej" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF3B0A"/></linearGradient>
+    <mask id="mj" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+      <rect width="240" height="240" fill="#fff"/>
+      <g transform="rotate(18 120 120)"><rect x="104" y="0" width="32" height="240" fill="#000"/></g>
+    </mask>
+  </defs>
+  <g mask="url(#mj)">
+    <rect x="22" y="66" width="196" height="108" rx="54" fill="none" stroke="#EEEDEA" stroke-width="30"/>
+  </g>
+  <g transform="rotate(18 120 120)"><rect x="113" y="34" width="14" height="172" rx="7" fill="url(#ej)"/></g>
+</g></svg>

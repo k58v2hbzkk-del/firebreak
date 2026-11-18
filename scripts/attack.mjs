@@ -26,6 +26,16 @@ async function fire(ch, account, address, abi, functionName, args, nonce) {
   const hash = await wallet(ch, account).writeContract({ address, abi, functionName, args, gas: 400_000n, ...(nonce != null ? { nonce } : {}) })
   return hash
 }
+async function block(ch, blockNumber) {
+  for (let i = 0; ; i++) {
+    try {
+      return await pub(ch).getBlock({ blockNumber })
+    } catch (e) {
+      if (i >= 8) return { timestamp: 0n }
+      await sleep(500)
+    }
+  }
+}
 async function settle(ch, hash) {
   const r = await pub(ch).waitForTransactionReceipt({ hash, timeout: 120_000 })
   return { ok: r.status === 'success', block: r.blockNumber, hash }
@@ -48,7 +58,7 @@ function watch(d, t0, fromBlocks) {
           const logs = await pub(ch).getContractEvents({ address, abi, eventName, fromBlock: fromBlocks[k] }).catch(() => [])
           if (logs.length) {
             const l = logs[0]
-            const blk = await pub(ch).getBlock({ blockNumber: l.blockNumber }).catch(() => null)
+            const blk = await block(ch, l.blockNumber)
             seen[k] = { ms: Date.now() - t0, hash: l.transactionHash, block: Number(l.blockNumber), blockTime: blk ? Number(blk.timestamp) : null, args: l.args }
           }
         }),
@@ -79,7 +89,7 @@ export async function forgedMint({ amount = '500', log = console.log } = {}) {
   const mintHash = await fire(base, attacker, C.minter, ABI.minter, 'forgedMint', [value], nonce)
   const w = watch(d, t0, from)
   const mint = await settle(base, mintHash)
-  const mintBlock = await pub(base).getBlock({ blockNumber: mint.block })
+  const mintBlock = await block(base, mint.block)
   step({ ms: Date.now() - t0, label: `Forged mint of ${amount} rsETH.b lands on Base`, chain: 'base', hash: mintHash, ok: mint.ok, kind: 'attack' })
 
   // the attacker's bot moves the instant it sees its mint: collateral + bridge exit, back to back
@@ -131,7 +141,7 @@ export async function forgedRelease({ amount = '5', tries = 8, log = console.log
     const h = await fire(uni, attacker, C.escrow, ABI.escrow, 'forgedRelease', [value], nonce++)
     if (!w) w = watch(d, t0, from)
     const r = await settle(uni, h)
-    if (!first) first = await pub(uni).getBlock({ blockNumber: r.block })
+    if (!first) first = await block(uni, r.block)
     if (r.ok) drained += value
     step({ ms: Date.now() - t0, label: `Forged release #${i + 1}: ${amount} rsETH`, chain: 'uni', hash: h, ok: r.ok, kind: r.ok ? 'loss' : 'blocked' })
     if (!r.ok && i >= 2) break // stopped; a couple of failed copycats are enough evidence
@@ -148,6 +158,8 @@ function finish(kind, d, steps, seen, extra) {
     seen.haltUni && { ms: seen.haltUni.ms, label: 'Unichain: bridge vault halted', chain: 'uni', hash: seen.haltUni.hash, ok: true, kind: 'firebreak' },
   ].filter(Boolean)
   const timeline = [...steps, ...lines].sort((a, b) => a.ms - b.ms)
+  console.log(`-- ${kind} summary`)
+  for (const t of timeline) console.log(`${String(t.ms).padStart(6)} ms  [${t.kind}] ${t.label}`)
   const url = (s) => tx({ base, uni, lasna }[s.chain], s.hash)
   return { kind, at: new Date().toISOString(), ...extra, timeline: timeline.map((s) => ({ ...s, url: url(s) })), seen }
 }
