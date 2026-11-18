@@ -1,0 +1,34 @@
+{
+  "deployedAt": "2026-11-18T03:27:30.434Z",
+  "commit": "8521810df056e4cceca9e7159892ac058b11061c",
+  "chains": {
+    "base": 84532,
+    "unichain": 1301,
+    "lasna": 5318007
+  },
+  "contracts": {
+    "rsETH": "0xf1e35894139725822f30073b924da4d23b680782",
+    "escrow": "0xb655dd9f9c562afe50f13ab41f2975c6945ee5e7",
+    "rsETHb": "0x09f76b0332c9d5641421e5a0b01dc8e590af2be6",
+    "minter": "0x012ad07ae2656b6cc628c01848e6eec1a30dd090",
+    "tUSD": "0x0ea80360c9ff7a1598c779a8a6b0821365b63714",
+    "pool": "0xea7f1baae748457977e38946c8ea0e08362d5b72",
+    "reactive": "0x4cfca7aedab62c0f13a5a2a83716d6bb43bb69ff",
+    "guardBase": "0xce787168b0eadf976a2b56ba5f761c0b9fba34a3",
+    "guardUni": "0xc23f166b20f1c209cfc97721584533f75be74062"
+  },
+  "actors": {
+    "deployer": "0x112c8885340a82f0DB029AA64d86a16cD36380FC",
+    "relayer": "0x5969a5448bc7D6B64364d76633f50F93495CFD3D",
+    "attacker": "0x5ee5610097857B4093699a5379483ff1300e18E0"
+  },
+  "txs": {
+    "honestLock": "0x805acb53286687cc6c93274298e95a5f04d44f1fa8b77c940071cd66bcb3ca78",
+    "honestMint": "0xf9931616ac90124dc54cf0e969381001216c5e7a92b22b93bbfc666ed67bbf16"
+  },
+  "books": {
+    "backing": "200000000000000000000",
+    "supply": "200000000000000000000",
+    "armed": true
+  }
+}

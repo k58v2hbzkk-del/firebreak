@@ -10,7 +10,10 @@
     "guardBase": "0xce787168b0eadf976a2b56ba5f761c0b9fba34a3",
     "guardUni": "0xc23f166b20f1c209cfc97721584533f75be74062"
   },
-  "txs": {},
+  "txs": {
+    "honestLock": "0x805acb53286687cc6c93274298e95a5f04d44f1fa8b77c940071cd66bcb3ca78",
+    "honestMint": "0xf9931616ac90124dc54cf0e969381001216c5e7a92b22b93bbfc666ed67bbf16"
+  },
   "done": {
     "rsETH": true,
     "escrow": true,
@@ -32,6 +35,7 @@
     "subscribe": true,
     "approvePool": true,
     "mintRs": true,
-    "approveEscrow": true
+    "approveEscrow": true,
+    "honestRound": true
   }
 }
