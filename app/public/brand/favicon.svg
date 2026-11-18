@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#141210"/><g transform="translate(6 6) scale(.8125)"><rect x="3" y="19" width="20" height="26" rx="7" fill="#F4EFE8"/><rect x="41" y="19" width="20" height="26" rx="7" fill="#F4EFE8"/><rect x="21" y="29.5" width="7" height="5" rx="2.5" fill="#F4EFE8"/><rect x="36" y="29.5" width="7" height="5" rx="2.5" fill="#F4EFE8"/><rect x="29" y="8" width="6" height="48" rx="3" fill="#FF5A1F"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240"><rect width="240" height="240" rx="56" fill="#111110"/><g transform="translate(20 20) scale(0.8333333333333334)">
+  <defs>
+    <linearGradient id="ec" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A1F"/><stop offset="1" stop-color="#FF3B0A"/></linearGradient>
+    <mask id="mc" maskUnits="userSpaceOnUse" x="0" y="0" width="240" height="240">
+      <rect width="240" height="240" fill="#fff"/>
+      <g transform="rotate(18 120 120)"><rect x="104" y="0" width="32" height="240" fill="#000"/></g>
+    </mask>
+  </defs>
+  <g mask="url(#mc)">
+    <rect x="22" y="66" width="196" height="108" rx="54" fill="none" stroke="#EEEDEA" stroke-width="30"/>
+  </g>
+  <g transform="rotate(18 120 120)"><rect x="113" y="34" width="14" height="172" rx="7" fill="url(#ec)"/></g>
+</g></svg>

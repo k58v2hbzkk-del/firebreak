@@ -10,6 +10,7 @@ import { parseEther, formatEther, decodeEventLog } from 'viem'
 import { CHAINS, keys, pub, wallet, artifact, loadDeployment, send, sleep, tx } from './net.mjs'
 
 const { base, uni, lasna } = CHAINS
+const RELAYER_WAIT_MS = Number(process.env.RELAYER_WAIT_MS ?? 5000)
 const ABI = {
   minter: artifact('Minter', 'Bridge.sol').abi,
   escrow: artifact('Escrow', 'Bridge.sol').abi,
@@ -80,7 +81,7 @@ async function startBlocks(d) {
   return { haltBase: b, haltUni: u, breach: l }
 }
 
-export async function forgedMint({ amount = '500', log = console.log } = {}) {
+export async function forgedMint({ amount = '100', log = console.log } = {}) {
   const d = loadDeployment()
   const { attacker, relayer } = keys()
   const C = d.contracts
@@ -119,6 +120,9 @@ export async function forgedMint({ amount = '500', log = console.log } = {}) {
   if (burn.ok) {
     const logs = await pub(base).getContractEvents({ address: C.minter, abi: ABI.minter, eventName: 'Burned', fromBlock: burn.block, toBlock: burn.block })
     const id = logs.find((l) => l.transactionHash === burnHash)?.args.id
+    // like the honest round, the relayer waits a few seconds for confirmations before releasing
+    // (real bridges wait minutes for finality)
+    await sleep(RELAYER_WAIT_MS)
     const rh = await fire(uni, relayer, C.escrow, ABI.escrow, 'release', [id, attacker.address, half])
     const r = await settle(uni, rh)
     step({ ms: Date.now() - t0, label: `Bridge releases ${formatEther(half)} real rsETH on Unichain`, chain: 'uni', hash: rh, ok: r.ok, kind: verdict(r) })
@@ -150,6 +154,8 @@ export async function forgedRelease({ amount = '5', tries = 8, log = console.log
     if (r.ok) drained += value
     step({ ms: Date.now() - t0, label: `Forged release #${i + 1}: ${amount} rsETH`, chain: 'uni', hash: h, ok: r.ok, kind: verdict(r) })
     if (!r.ok && i >= 2) break // stopped; a couple of failed copycats are enough evidence
+    // each copycat lands in its own block (Unichain confirms ahead of sealing the block)
+    while ((await pub(uni).getBlockNumber()) <= r.block) await sleep(150)
   }
   await Promise.race([sleep(15_000), (async () => { while (Object.keys(w.seen).length < 3) await sleep(200) })()])
   await w.stop()

@@ -41,7 +41,7 @@ The lending pool makes new bridged collateral settle for 2 blocks (about 4 s on 
 
 The site runs two real exploits against the testnet deployment and times Firebreak's answer on every chain:
 
-- **Forge a mint (Kelp-style).** The attacker mints 500 rsETH.b on Base with nothing locked, then races to post it as collateral, borrow, and burn it to pull real rsETH off Unichain.
+- **Forge a mint (Kelp-style).** The attacker mints 100 rsETH.b on Base with nothing locked, then races to post it as collateral, borrow, and burn it to pull real rsETH off Unichain.
 - **Drain the vault (Nomad-style).** The attacker sends forged releases from the Unichain vault again and again.
 
 Every attacker step is a real transaction. Blocked steps are sent with a fixed gas limit so the revert is visible in the explorer. After each run, governance cleanup claws back forged tokens, re-arms Firebreak and resumes the system.
@@ -90,7 +90,7 @@ The server reads all three chains, runs at most one attack at a time with a cool
 
 - Firebreak cannot stop the first forged transaction: nothing on that chain can tell it is forged. It stops what comes next: the borrowing, the bridging out and the copycats.
 - In the Nomad-style run, releases that land before the halt get through. The recorded runs show how many.
-- The bridge relayer waits a few seconds before acting on an event (real bridges wait longer, for finality), so Firebreak always books the honest half first.
+- The demo bridge relayer waits 5 seconds before acting on an event (real bridges wait minutes, for finality). Firebreak needs about 2 seconds, so it books the honest half first and halts the vault before a forged burn can be released.
 - Testnet only, not audited.
 
 ## Credits
