@@ -12,6 +12,7 @@ const run = (f) => execSync(`node ${path.join(ROOT, 'scripts', f)}`, { stdio: 'i
 if (is('fund')) run('fund.mjs')
 if (is('deploy')) run('deploy.mjs')
 if (is('demo')) await demo()
+if (want.has('bench')) await (await import('./bench.mjs')).bench(Number(process.env.BENCH_N ?? 6))
 if (want.has('reset')) await (await import('./attack.mjs')).reset()
 if (want.has('balances')) {
   const { deployer } = keys()
