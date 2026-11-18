@@ -41,9 +41,16 @@ const pubs = {}
 export const pub = (c) => (pubs[c.id] ??= createPublicClient({ chain: c, pollingInterval: 250, transport: http(undefined, { retryCount: 4, retryDelay: 800 }) }))
 export const wallet = (c, account) => createWalletClient({ chain: c, account, pollingInterval: 250, transport: http(undefined, { retryCount: 2 }) })
 
+let abis
 export function artifact(name, file = `${name}.sol`) {
-  const j = JSON.parse(fs.readFileSync(path.join(ROOT, 'contracts', 'out', file, `${name}.json`), 'utf8'))
-  return { abi: j.abi, bytecode: j.bytecode.object }
+  const f = path.join(ROOT, 'contracts', 'out', file, `${name}.json`)
+  if (fs.existsSync(f)) {
+    const j = JSON.parse(fs.readFileSync(f, 'utf8'))
+    return { abi: j.abi, bytecode: j.bytecode.object }
+  }
+  // the web server ships without forge output: ABIs only (scripts/abi.json)
+  abis ??= JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts', 'abi.json'), 'utf8'))
+  return { abi: abis[name], bytecode: null }
 }
 
 export async function deploy(c, account, name, args = [], value = 0n, file) {

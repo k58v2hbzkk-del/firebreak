@@ -5,13 +5,14 @@ import path from 'node:path'
 import { execSync } from 'node:child_process'
 import { ROOT, DEPLOYMENT, CHAINS, at, keys, balances, fmt } from './net.mjs'
 
-const what = (process.argv[2] ?? 'all').trim()
+const want = new Set((process.argv[2] ?? 'all').trim().split('+'))
+const is = (k) => want.has(k) || want.has('all')
 const run = (f) => execSync(`node ${path.join(ROOT, 'scripts', f)}`, { stdio: 'inherit', env: process.env })
 
-if (what === 'fund' || what === 'all') run('fund.mjs')
-if (what === 'deploy' || what === 'all') run('deploy.mjs')
-if (what === 'demo' || what === 'all') await demo()
-if (what === 'balances') {
+if (is('fund')) run('fund.mjs')
+if (is('deploy')) run('deploy.mjs')
+if (is('demo')) await demo()
+if (want.has('balances')) {
   const { deployer } = keys()
   const b = await balances(deployer.address)
   for (const k of Object.keys(b)) console.log(`${k.padEnd(8)} ${fmt(b[k])}`)

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Firebreak: stop a bridge hack in one second</title>
+<meta name="description" content="A cross-chain circuit breaker run by Reactive Network. When a bridge's books stop adding up, Firebreak halts the bridge and the lending markets on every chain in about a second." />
+<meta name="theme-color" content="#141210" />
+<link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top"><img src="/brand/mark.svg" alt="" /><span>Firebreak</span></a>
+  <nav class="links"><a href="#console">Live demo</a><a href="#how">How it works</a><a href="#proof">Proof</a><a href="https://github.com/k58v2hbzkk-del/firebreak" target="_blank" rel="noopener">Code</a></nav>
+  <a class="btn ember sm" href="#console">Hack the bridge</a>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="glow"></div>
+    <svg class="schematic" viewBox="0 0 520 520" aria-hidden="true">
+      <defs><linearGradient id="emb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB020"/><stop offset="1" stop-color="#FF4A12"/></linearGradient></defs>
+      <path class="wire" d="M120 120 C 220 120, 230 260, 260 260 S 300 400, 400 400" />
+      <path class="wire" d="M400 120 C 300 120, 290 260, 260 260 S 220 400, 120 400" />
+      <circle class="pulse p1" r="6" /><circle class="pulse p2" r="6" />
+      <g class="node" transform="translate(120 120)"><rect x="-62" y="-30" width="124" height="60" rx="18"/><text y="6">Base</text></g>
+      <g class="node" transform="translate(400 400)"><rect x="-62" y="-30" width="124" height="60" rx="18"/><text y="6">Unichain</text></g>
+      <g class="node brain" transform="translate(260 260)"><rect x="-74" y="-36" width="148" height="72" rx="22"/><text y="-2">Reactive</text><text class="small" y="18">Firebreak</text></g>
+      <g class="node" transform="translate(400 120)"><rect x="-62" y="-30" width="124" height="60" rx="18"/><text y="6">Pool</text></g>
+      <g class="node" transform="translate(120 400)"><rect x="-62" y="-30" width="124" height="60" rx="18"/><text y="6">Vault</text></g>
+      <rect class="breaker" x="255" y="70" width="10" height="380" rx="5" fill="url(#emb)" />
+    </svg>
+    <p class="kicker"><span class="dot"></span> Live on Base Sepolia · Unichain Sepolia · Reactive Lasna</p>
+    <h1>Stop a bridge hack<br /><span class="ember-text">in one second.</span></h1>
+    <p class="lede">Bridge exploits spread across chains faster than any team can sign a pause. Firebreak watches both sides of a bridge from Reactive Network, and the moment the books stop adding up, it halts the bridge and the lending markets on every chain. No bot. No server. No human in the loop.</p>
+    <div class="ctas"><a class="btn ember" href="#console">Hack the bridge yourself</a><a class="btn ghost" href="#how">How it works</a></div>
+    <div class="stats">
+      <div><b id="statLatency">~1.5 s</b><span>from exploit to halt</span></div>
+      <div><b>2 chains</b><span>halted in one reactive transaction</span></div>
+      <div><b>0</b><span>keepers, bots or servers to switch off</span></div>
+    </div>
+  </section>
+
+  <section class="console" id="console">
+    <div class="head">
+      <div>
+        <p class="kicker">Live console</p>
+        <h2>Play the attacker.</h2>
+        <p class="sub">These are real contracts on public testnets. Pick an exploit and watch Firebreak answer, transaction by transaction.</p>
+      </div>
+      <div class="attacks">
+        <button class="attack" data-kind="forgedMint"><span class="tag">Kelp-style · 2026</span><b>Forge a mint</b><small>Mint 500 rsETH.b on Base with nothing locked behind it, then race to borrow and to bridge out.</small></button>
+        <button class="attack" data-kind="forgedRelease"><span class="tag">Nomad-style · 2022</span><b>Drain the vault</b><small>Send forged releases from the Unichain vault, again and again, like the copycats did.</small></button>
+      </div>
+    </div>
+
+    <div class="chains">
+      <article class="chain" id="cBase">
+        <header><span class="cn">Base Sepolia</span><span class="pill" id="sBase">…</span></header>
+        <div class="row"><span>Bridge minter</span><i id="hMinter" class="st">…</i></div>
+        <div class="row"><span>Lending pool</span><i id="hPool" class="st">…</i></div>
+        <div class="big"><span id="vSupply">–</span><small>rsETH.b in circulation</small></div>
+      </article>
+      <article class="chain brain" id="cLasna">
+        <header><span class="cn">Reactive Lasna</span><span class="pill" id="sArmed">…</span></header>
+        <p class="what">FirebreakReactive keeps one set of books for both chains.</p>
+        <div class="bars">
+          <div><label>Backing (locked on Unichain)</label><div class="bar"><i id="bBacking"></i></div><b id="nBacking">–</b></div>
+          <div><label>Supply (minted on Base)</label><div class="bar"><i id="bSupply"></i></div><b id="nSupply">–</b></div>
+        </div>
+        <div class="rule">Rule: every rsETH.b needs rsETH locked behind it, and every release needs a burn.</div>
+      </article>
+      <article class="chain" id="cUni">
+        <header><span class="cn">Unichain Sepolia</span><span class="pill" id="sUni">…</span></header>
+        <div class="row"><span>Bridge vault</span><i id="hEscrow" class="st">…</i></div>
+        <div class="row"><span>Halts so far</span><i id="tUni" class="st plain">–</i></div>
+        <div class="big"><span id="vVault">–</span><small>rsETH locked in the vault</small></div>
+      </article>
+    </div>
+
+    <div class="run">
+      <div class="clock"><span id="clock">0.0</span><small>seconds since the attacker's first transaction</small></div>
+      <ol class="timeline" id="timeline"><li class="empty">Pick an exploit above. Each step will appear here with its transaction.</li></ol>
+      <p class="status" id="status" role="status"></p>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <p class="kicker">How it works</p>
+    <h2>No chain can see a bridge's whole promise.<br /><span class="muted">Reactive can.</span></h2>
+    <div class="steps">
+      <article><b>01</b><h3>Both halves, one ledger</h3><p>FirebreakReactive on Reactive Lasna subscribes to the vault on Unichain and the minter on Base. Every lock, mint, burn and release lands in one set of books.</p></article>
+      <article><b>02</b><h3>Check every event</h3><p>A mint must match a lock of the same id and amount. A release must match a burn. Supply can never pass backing. A forged message breaks one of these at once.</p></article>
+      <article><b>03</b><h3>Halt every chain at once</h3><p>On a breach it requests callbacks to a FirebreakGuard on each chain in the same reactive transaction. The guards halt the minter, the lending pool and the vault.</p></article>
+      <article><b>04</b><h3>Humans decide when it's safe</h3><p>A machine can pull the brake; only governance can release it. Repaying loans and withdrawing debt-free collateral keep working while halted.</p></article>
+    </div>
+    <div class="why">
+      <h3>Why it needs Reactive Omni</h3>
+      <p>The lending pool lets new bridged collateral settle for 2 blocks (about 4 seconds) before it can back a loan. That window is only safe because Omni's ~1 second blocks and instant finality let Firebreak decide inside it. On a 7-second network, the window would have to be several times longer for every honest user.</p>
+    </div>
+  </section>
+
+  <section class="proof" id="proof">
+    <p class="kicker">Proof</p>
+    <h2>Recorded runs, on-chain.</h2>
+    <div id="runs" class="runs"><p class="muted">Loading…</p></div>
+    <div id="contracts" class="contracts"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="brand"><img src="/brand/mark.svg" alt="" /><span>Firebreak</span></div>
+  <p>Built by Tajudeen (@Tajudeen) for the Reactive Omni Buildathon · Every Second Counts. MIT licensed. Testnet only, not audited.</p>
+</footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
