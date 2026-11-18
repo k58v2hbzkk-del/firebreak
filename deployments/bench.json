@@ -1,0 +1,162 @@
+{
+  "at": "2026-11-18T10:25:48.017Z",
+  "runs": [
+    {
+      "run": 1,
+      "at": "2026-11-18T10:24:28.019Z",
+      "mintHash": "0x636b2f43b31d92514e5ad9a3bf004915b81a7dd16f00546313ed97c65afc4909",
+      "mintBlock": 60377958,
+      "breachMs": 1819,
+      "baseMs": 2093,
+      "uniMs": 3201,
+      "breachHash": "0x64f415c960346fa0116916e22c551e287cb74ed4c48b39500470f2a319a36535",
+      "baseHash": "0x4133c7ed908e4bc2fef80c367cc9ee52205078badf050c6815e07ef3ecc41a13",
+      "uniHash": "0x9fcb6736f7fa134935a5cfde76b0c18ad81511132487c0206e70498eccf40d54",
+      "blocked": [
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xc73bf4c48ca9e35372424a44c129a3d4cc5b1212aa27948b95186e0fa39e0ba8",
+          "chain": "uni"
+        }
+      ],
+      "losses": 1,
+      "baseBlocks": 7
+    },
+    {
+      "run": 2,
+      "at": "2026-11-18T10:24:43.156Z",
+      "mintHash": "0xb676e7134cbc6519f46ecc8c8d20284d2280f77ec5e26f345d9e7f78ff4282c0",
+      "mintBlock": 60378029,
+      "breachMs": 871,
+      "baseMs": 1144,
+      "uniMs": 2502,
+      "breachHash": "0x88e9126e69d826848cb1e6a475fe15b68d99669d9ceaf8014068679966c947ed",
+      "baseHash": "0xccd3940b07f20f42a6080d117b4cfe17a8bdf70ca20f1ea11aec96c62e8d623f",
+      "uniHash": "0xacdaacc53512af5ffa5b4b0dfccf54aa337bb40bd32e91af980195f494e10b71",
+      "blocked": [
+        {
+          "label": "Attacker tries to borrow 105,000 tUSD",
+          "hash": "0x9f9dfbad7609f035559be70fd4f07c8eb26570b8b3befdddd6858653b5769b43",
+          "chain": "base"
+        },
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xbd325b29e635081d0955bddbd06f06a1d03f3ea799430039c17f806ab4e87629",
+          "chain": "uni"
+        }
+      ],
+      "losses": 0,
+      "baseBlocks": 6
+    },
+    {
+      "run": 3,
+      "at": "2026-11-18T10:24:58.990Z",
+      "mintHash": "0x7a4c685919c727db3c303de564ca8888396449a3e585a9493a40652764354278",
+      "mintBlock": 60378108,
+      "breachMs": 1742,
+      "baseMs": 2022,
+      "uniMs": 3647,
+      "breachHash": "0x9f94edd26d4b54c32296590c71e3fd6275622de8a45b0c727a5195ab4f6db040",
+      "baseHash": "0x9ab41855b74623b051efc48bdfe88a639eaed706cde7c21676571a0eb1fcc419",
+      "uniHash": "0xf161bf820d19a8009df641fdb3af1556a8e4394eb404bf8ff3020ff3c4263f17",
+      "blocked": [
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xe2f638c2ddf483db535db4227ed5c8493a4804dce90a97aea1599310ea4034b7",
+          "chain": "uni"
+        }
+      ],
+      "losses": 0,
+      "baseBlocks": 9
+    },
+    {
+      "run": 4,
+      "at": "2026-11-18T10:25:12.983Z",
+      "mintHash": "0x19e6bf51588fc782e475a7e33eec6055ee353099bc0b627b1e96837db56a5144",
+      "mintBlock": 60378183,
+      "breachMs": 1854,
+      "baseMs": 2136,
+      "uniMs": 3228,
+      "breachHash": "0x3620e75f9c87b842e3eaf600b8a4b4f35782a5d83aca48fa5d8be4b3a96230b3",
+      "baseHash": "0x450afc7e55f5d7d110135e29fc70365dba2f758598b05592489c1e5e0fc5b1a4",
+      "uniHash": "0x7908b0b643fe103aaa40851400ee1b5b14f301dfd1efff99007cbbbba2e097e0",
+      "blocked": [
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0x1a2d89acd163994240e54abf37d16d05fa593818c6a26abdd24b7de1c230980e",
+          "chain": "uni"
+        }
+      ],
+      "losses": 0,
+      "baseBlocks": 8
+    },
+    {
+      "run": 5,
+      "at": "2026-11-18T10:25:27.967Z",
+      "mintHash": "0xc8ed0bc1302b267bba0ae344fe0d34bd47d1d445644ef3e46e818277282a0aaf",
+      "mintBlock": 60378258,
+      "breachMs": 1108,
+      "baseMs": 1383,
+      "uniMs": 2740,
+      "breachHash": "0xee57a9af7964ce1032844f01b54e22a5bd039ad744ae1df6122e09a092cdc7b5",
+      "baseHash": "0x89cb95b18b8642bbc93678e0e9332fa97abee1991e73c5f775e03b0ad4987810",
+      "uniHash": "0xaded89897e3745d8404652d3befc5df390d91bbd33f876da2dad2df7b7602eb3",
+      "blocked": [
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0xf0589b47dfb3a69ba77055fdc2ef084128bd7c6fc72346d7ce6ea5d40e475810",
+          "chain": "uni"
+        }
+      ],
+      "losses": 0,
+      "baseBlocks": 6
+    },
+    {
+      "run": 6,
+      "at": "2026-11-18T10:25:42.046Z",
+      "mintHash": "0x9766d78d18ce13c14d44c4ca7fc10411fc11762da46bfb934e2b3811eef4e9c1",
+      "mintBlock": 60378330,
+      "breachMs": 1839,
+      "baseMs": 2116,
+      "uniMs": 3721,
+      "breachHash": "0x5be4bdd20337a34c91583bbcdff801f6b228009f29d676c226d4fa9e7f2412cc",
+      "baseHash": "0x11d4f2941cc69e3bb0049d63a5e64e3f79f816ada74f2013502aa528b20d1a60",
+      "uniHash": "0xf05517cf0d026c501c06545e7092e939fb8e8dec5400c7a5b3fa5196ba6c2a1c",
+      "blocked": [
+        {
+          "label": "Bridge releases 50 real rsETH on Unichain",
+          "hash": "0x3b3bb1e63cca52a50bd5b22a0c42f5f476c91cf220e77aea7a300dfec3ebb980",
+          "chain": "uni"
+        }
+      ],
+      "losses": 0,
+      "baseBlocks": 8
+    }
+  ],
+  "stats": {
+    "breachMs": {
+      "min": 871,
+      "median": 1819,
+      "max": 1854,
+      "avg": 1539
+    },
+    "baseMs": {
+      "min": 1144,
+      "median": 2093,
+      "max": 2136,
+      "avg": 1816
+    },
+    "uniMs": {
+      "min": 2502,
+      "median": 3228,
+      "max": 3721,
+      "avg": 3173
+    },
+    "baseBlocks": {
+      "min": 6,
+      "median": 8,
+      "max": 9,
+      "avg": 7
+    }
+  }
+}
