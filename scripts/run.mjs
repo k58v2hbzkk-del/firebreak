@@ -53,7 +53,7 @@ function md(d, runs) {
     const title = r.kind === 'forgedMint' ? 'Attack 1 · forged mint on Base (Kelp-style)' : 'Attack 2 · forged vault releases on Unichain (Nomad-style)'
     s += `\n## ${title}\n\nTimes are measured from the moment the attacker's first transaction was sent.\n\n| ms | Chain | What happened | Result | Transaction |\n|---:|---|---|---|---|\n`
     for (const t of r.timeline) {
-      const res = t.kind === 'firebreak' ? '**Firebreak**' : t.kind === 'blocked' ? 'Blocked (reverted)' : t.kind === 'loss' ? 'Went through' : 'Attacker step'
+      const res = t.kind === 'firebreak' ? '**Firebreak**' : t.kind === 'blocked' ? 'Blocked (reverted)' : t.kind === 'loss' ? 'Went through' : t.kind === 'failed' ? 'Reverted (other reason)' : 'Attacker step'
       s += `| ${t.ms} | ${{ base: 'Base', uni: 'Unichain', lasna: 'Lasna' }[t.chain]} | ${t.label} | ${res} | [${t.hash.slice(0, 12)}…](${t.url}) |\n`
     }
     if (r.drained) s += `\nDrained before the halt: **${r.drained} rsETH** of ${r.attempted} attempted.\n`

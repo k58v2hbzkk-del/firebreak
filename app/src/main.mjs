@@ -2,7 +2,7 @@ const $ = (s) => document.querySelector(s)
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
 const fmt = (n) => (n == null ? '–' : Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 }))
 const CH = { base: 'Base', uni: 'Unichain', lasna: 'Lasna' }
-const KIND = { firebreak: 'Firebreak', blocked: 'Blocked', loss: 'Got through', attack: 'Attacker' }
+const KIND = { firebreak: 'Firebreak', blocked: 'Blocked', loss: 'Got through', attack: 'Attacker', failed: 'Reverted' }
 
 // ---------------------------------------------------------------- live state
 let busy = false

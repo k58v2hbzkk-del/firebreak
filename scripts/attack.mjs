@@ -38,8 +38,13 @@ async function block(ch, blockNumber) {
 }
 async function settle(ch, hash) {
   const r = await pub(ch).waitForTransactionReceipt({ hash, timeout: 120_000 })
-  return { ok: r.status === 'success', block: r.blockNumber, hash }
+  let haltedThen = null
+  if (r.status !== 'success' && r.to) {
+    haltedThen = await pub(ch).readContract({ address: r.to, abi: ABI.guarded, functionName: 'halted', blockNumber: r.blockNumber }).catch(() => null)
+  }
+  return { ok: r.status === 'success', block: r.blockNumber, hash, haltedThen }
 }
+const verdict = (r) => (r.ok ? 'loss' : r.haltedThen ? 'blocked' : 'failed')
 
 /** Watches for Firebreak's three answers and stamps when each was first seen. */
 function watch(d, t0, fromBlocks) {
@@ -97,8 +102,8 @@ export async function forgedMint({ amount = '500', log = console.log } = {}) {
   const depHash = await fire(base, attacker, C.pool, ABI.pool, 'deposit', [half], nonce + 1)
   const burnHash = await fire(base, attacker, C.minter, ABI.minter, 'burn', [half, attacker.address], nonce + 2)
   const [dep, burn] = await Promise.all([settle(base, depHash), settle(base, burnHash)])
-  step({ ms: Date.now() - t0, label: `Attacker posts ${formatEther(half)} as collateral`, chain: 'base', hash: depHash, ok: dep.ok, kind: dep.ok ? 'attack' : 'blocked' })
-  step({ ms: Date.now() - t0, label: `Attacker burns ${formatEther(half)} to exit through the bridge`, chain: 'base', hash: burnHash, ok: burn.ok, kind: burn.ok ? 'attack' : 'blocked' })
+  step({ ms: Date.now() - t0, label: `Attacker posts ${formatEther(half)} as collateral`, chain: 'base', hash: depHash, ok: dep.ok, kind: dep.ok ? 'attack' : verdict(dep) })
+  step({ ms: Date.now() - t0, label: `Attacker burns ${formatEther(half)} to exit through the bridge`, chain: 'base', hash: burnHash, ok: burn.ok, kind: burn.ok ? 'attack' : verdict(burn) })
 
   // borrow as soon as the pool's settle window allows
   if (dep.ok) {
@@ -107,7 +112,7 @@ export async function forgedMint({ amount = '500', log = console.log } = {}) {
     const lim = await pub(base).readContract({ address: C.pool, abi: ABI.pool, functionName: 'borrowLimit', args: [attacker.address] })
     const bh = await fire(base, attacker, C.pool, ABI.pool, 'borrow', [lim], nonce + 3)
     const b = await settle(base, bh)
-    step({ ms: Date.now() - t0, label: `Attacker tries to borrow ${Number(formatEther(lim)).toLocaleString()} tUSD`, chain: 'base', hash: bh, ok: b.ok, kind: b.ok ? 'loss' : 'blocked' })
+    step({ ms: Date.now() - t0, label: `Attacker tries to borrow ${Number(formatEther(lim)).toLocaleString()} tUSD`, chain: 'base', hash: bh, ok: b.ok, kind: verdict(b) })
   }
 
   // the bridge relayer honours the burn, like a real (compromised-message) bridge would
@@ -116,7 +121,7 @@ export async function forgedMint({ amount = '500', log = console.log } = {}) {
     const id = logs.find((l) => l.transactionHash === burnHash)?.args.id
     const rh = await fire(uni, relayer, C.escrow, ABI.escrow, 'release', [id, attacker.address, half])
     const r = await settle(uni, rh)
-    step({ ms: Date.now() - t0, label: `Bridge releases ${formatEther(half)} real rsETH on Unichain`, chain: 'uni', hash: rh, ok: r.ok, kind: r.ok ? 'loss' : 'blocked' })
+    step({ ms: Date.now() - t0, label: `Bridge releases ${formatEther(half)} real rsETH on Unichain`, chain: 'uni', hash: rh, ok: r.ok, kind: verdict(r) })
   }
 
   await Promise.race([sleep(20_000), (async () => { while (Object.keys(w.seen).length < 3) await sleep(200) })()])
@@ -143,7 +148,7 @@ export async function forgedRelease({ amount = '5', tries = 8, log = console.log
     const r = await settle(uni, h)
     if (!first) first = await block(uni, r.block)
     if (r.ok) drained += value
-    step({ ms: Date.now() - t0, label: `Forged release #${i + 1}: ${amount} rsETH`, chain: 'uni', hash: h, ok: r.ok, kind: r.ok ? 'loss' : 'blocked' })
+    step({ ms: Date.now() - t0, label: `Forged release #${i + 1}: ${amount} rsETH`, chain: 'uni', hash: h, ok: r.ok, kind: verdict(r) })
     if (!r.ok && i >= 2) break // stopped; a couple of failed copycats are enough evidence
   }
   await Promise.race([sleep(15_000), (async () => { while (Object.keys(w.seen).length < 3) await sleep(200) })()])
@@ -178,6 +183,15 @@ export async function reset({ log = console.log } = {}) {
   if (fake > 0n) await send(base, deployer, C.minter, ABI.minter, 'confiscate', [attacker.address, fake])
   const stolen = await pub(uni).readContract({ address: C.rsETH, abi: ABI.rs, functionName: 'balanceOf', args: [attacker.address] })
   if (stolen > 0n) await send(uni, attacker, C.rsETH, ABI.rs, 'transfer', [C.escrow, stolen])
+  // top the vault back up so backing covers supply again before re-arming
+  {
+    const [vault, sup] = await Promise.all([
+      pub(uni).readContract({ address: C.rsETH, abi: ABI.rs, functionName: 'balanceOf', args: [C.escrow] }),
+      pub(base).readContract({ address: C.rsETHb, abi: ABI.rsb, functionName: 'totalSupply' }),
+    ])
+    if (sup > vault) await send(uni, deployer, C.rsETH, ABI.rs, 'transfer', [C.escrow, sup - vault])
+  }
+  await sleep(1500)
   const [backing, supply] = await Promise.all([
     pub(uni).readContract({ address: C.rsETH, abi: ABI.rs, functionName: 'balanceOf', args: [C.escrow] }),
     pub(base).readContract({ address: C.rsETHb, abi: ABI.rsb, functionName: 'totalSupply' }),
